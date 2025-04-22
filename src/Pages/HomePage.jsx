@@ -41,11 +41,6 @@ function Home() {
         <h1>Bienvenido al sistema</h1>
         <Button variant="primary">Haz clic</Button>
       </div>
-
-     
-
-      
-
     </>
   );
 }
