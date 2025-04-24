@@ -1,6 +1,7 @@
 // src/Pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -33,6 +34,7 @@ function LoginPage() {
 
               <Form.Group controlId="formBasicPassword" className="mt-3">
                 <Form.Label>Contraseña</Form.Label>
+                
                 <Form.Control
                   type="password"
                   placeholder="Contraseña"
@@ -41,7 +43,9 @@ function LoginPage() {
                   required
                 />
               </Form.Group>
-
+              <div className="text-center mt-3">
+                <Link to="/forgot-passowrd">¿Olvidaste tu contraseña?</Link>
+              </div>
               <Button variant="primary" type="submit" className="w-100 mt-4">
                 Ingresar
               </Button>
