@@ -1,19 +1,32 @@
 import React from 'react';
-import {  Button, Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Button, Navbar, Nav, NavDropdown, Container, Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import IngresoSmart from '../Logo/IngresoSmart.png';
+import { noticias } from '../data/data';
 
 
 function Home() {
+
+ 
+
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="custom-navbar">
         <Container>
-          <Navbar.Brand href="/home">Home</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/home" className="d-flex align-items-center">
+            <img
+              src={IngresoSmart}
+              alt="Logo"
+              width="50"
+              height="50"
+              className="d-inline-block align-top me-2"
+            />
+            Home
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Noticia</Nav.Link>
+              <Nav.Link href="/noticia">Noticia</Nav.Link>
               <Nav.Link href="/contacto">Formulario Contacto</Nav.Link>
 
               {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -30,17 +43,33 @@ function Home() {
             </Nav>
             <Nav className="ms-auto">
               <Nav.Link href="/login">
-                <i className="bi bi-person-circle" style={{ fontSize: '1.5rem' }}></i>
+                <i className="bi bi-person-circle" style={{ fontSize: '1.8rem' }}></i>
+                <div style={{ fontSize: '0.85rem', marginTop: '4px' }}>Iniciar sesión</div>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <div className="text-center mt-5">
-        <h1>Bienvenido al sistema</h1>
-        <Button variant="primary">Haz clic</Button>
-      </div>
+      <Container className="mt-5">
+        <h2 className="mb-4 text-center">Últimas Noticias</h2>
+        <Row xs={1} md={2} lg={3} className="g-4">
+          {noticias.map((id) => (
+            <Col key={id}>
+              <Card>
+                <Card.Img variant="top" src={`https://via.placeholder.com/300x200?text=Noticia+${id}`} />
+                <Card.Body>
+                  <Card.Title>{id.titulo}</Card.Title>
+                  <Card.Text>
+                    {id.descripcion}.
+                  </Card.Text>
+                  <Button variant="primary">Leer más</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     </>
   );
 }

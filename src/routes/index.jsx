@@ -3,13 +3,20 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from '../Pages/HomePage';
 import ContactoPage from '../Pages/ContactoPage';
 import LoginPage from '../Pages/LoginPage';
+import NoticiaPage from '../Pages/NoticiaPage';
+import ForgotPassaword from '../Pages/ForgotPassword';
+import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
+import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
+import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
+import MiPerfil from '../Pages/MiPerfilPage';
+
 
 
 
 export const RoutesComponent = createBrowserRouter([
   {
     path: '/',
-    element: < HomePage />,
+    element: <HomePage/>,
     index: true
   },
   {
@@ -19,6 +26,30 @@ export const RoutesComponent = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage/>,
+  },
+  {
+    path: '/noticia',
+    element: <NoticiaPage/>,
+  },
+  {
+    path: '/ForgotPassowrd',
+    element: <ForgotPassaword/>,
+  },
+  {
+    path: '/ingreso-visita',
+    element: <IngresoVisita/>,
+  },
+  {
+    path: '/listaVehiculo',
+    element: <ListaVehiculo/>,
+  },
+  {
+    path: '/listaVisita',
+    element: <ListaVisita/>,
+  },
+  {
+    path: '/miPerfil',
+    element: <MiPerfil/>,
   }
 ]);
 
