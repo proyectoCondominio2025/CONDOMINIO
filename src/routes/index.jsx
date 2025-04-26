@@ -8,10 +8,9 @@ import ForgotPassaword from '../Pages/ForgotPassword';
 import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
-import MiPerfil from '../Pages/MiPerfilPage';
 import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
 import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
-import { UserProfilePage } from '../Pages/UserResidente/UserProfilePage'; 
+import { UserProfilePage } from '../Pages/UserProfilePage'; 
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -46,10 +45,6 @@ export const RoutesComponent = createBrowserRouter([
   {
     path: '/listaVisita',
     element: <ListaVisita/>,
-  },
-  {
-    path: '/miPerfil',
-    element: <MiPerfil/>,
   },
   {
     path: '/residentesAnuncios',

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
-import { Footer } from '../../components/footer';
+import { Footer } from '../components/footer';
 import { FaUserCircle } from 'react-icons/fa';
-import ProfileField from '../../components/ProfileField';
+import ProfileField from '../components/ProfileField';
 
 export const UserProfilePage = () => {
   return (
@@ -45,7 +45,6 @@ export const UserProfilePage = () => {
           <Nav.Link href="/" className="text-dark fw-medium px-2">INICIO</Nav.Link>
           <Nav.Link href="/" className="text-dark fw-medium px-2">ANUNCIO</Nav.Link>
           <Nav.Link href="/historialPago" className="text-dark fw-medium px-2">HISTORIAL DE PAGOS</Nav.Link>
-          <Nav.Link href="/perfil" className="text-dark fw-medium px-2">PERFIL</Nav.Link>
           <Nav.Link href="/contacto" className="text-dark fw-medium px-2">CONTACTO</Nav.Link>
         </Nav>
       </div>
