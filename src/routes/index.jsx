@@ -9,6 +9,7 @@ import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import MiPerfil from '../Pages/MiPerfilPage';
+import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
 
 
 
@@ -50,7 +51,11 @@ export const RoutesComponent = createBrowserRouter([
   {
     path: '/miPerfil',
     element: <MiPerfil/>,
-  }
+  },
+  {
+    path: '/residentesAnuncios',
+    element: <ResidentsHomePageWithAnnouncements/>,
+  },
 ]);
 
 //   <Routes>
