@@ -29,6 +29,10 @@ function Home() {
               <Nav.Link href="/noticia">Noticias</Nav.Link>
               <Nav.Link href="/contacto">Formulario Contacto</Nav.Link>
               <Nav.Link href="/residentesAnuncios">Residentes</Nav.Link>
+              <Nav.Link href="/historialPago">Historial de pago</Nav.Link>
+              {/* Recordar de cambiar - Residentes, -Historial de pago, - */}
+
+
               {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

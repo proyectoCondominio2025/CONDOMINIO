@@ -10,7 +10,7 @@ import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import MiPerfil from '../Pages/MiPerfilPage';
 import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
-
+import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
 
 
 
@@ -55,6 +55,10 @@ export const RoutesComponent = createBrowserRouter([
   {
     path: '/residentesAnuncios',
     element: <ResidentsHomePageWithAnnouncements/>,
+  },
+  {
+    path: '/historialPago',
+    element: <PaymentHistoryPage  />,
   },
 ]);
 
