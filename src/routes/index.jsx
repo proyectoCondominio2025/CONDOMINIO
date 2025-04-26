@@ -11,8 +11,7 @@ import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import MiPerfil from '../Pages/MiPerfilPage';
 import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
 import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
-
-
+import { UserProfilePage } from '../Pages/UserResidente/UserProfilePage'; 
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -58,7 +57,11 @@ export const RoutesComponent = createBrowserRouter([
   },
   {
     path: '/historialPago',
-    element: <PaymentHistoryPage  />,
+    element: <PaymentHistoryPage/>,
+  },
+  {
+    path: '/profile',
+    element: <UserProfilePage/>
   },
 ]);
 

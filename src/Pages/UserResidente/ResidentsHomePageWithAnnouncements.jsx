@@ -83,7 +83,7 @@ export const ResidentsHomePageWithAnnouncements = () => {
             </Nav.Link>
 
             <Nav.Link
-              href="/perfil"
+              href="/profile"
               className="text-dark fw-medium d-flex align-items-center gap-2 text-decoration-none border-bottom border-2 border-dark pb-1"
               style={{ borderRadius: 0 }}
             >
@@ -111,7 +111,6 @@ export const ResidentsHomePageWithAnnouncements = () => {
           </NavDropdown>
 
           <Nav.Link href="/historialPago" className="text-dark fw-medium px-2">HISTORIAL DE PAGOS</Nav.Link>
-          <Nav.Link href="/perfil" className="text-dark fw-medium px-2">PERFIL</Nav.Link>
           <Nav.Link href="/contacto" className="text-dark fw-medium px-2">CONTACTO</Nav.Link>
         </Nav>
       </div>
