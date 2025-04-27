@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Navbar, Nav, Container, Card, Row, Col, Form, FormControl } from 'react-bootstrap';
+import { Navbar, Nav, Container, Form, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import IngresoSmart from '../Logo/IngresoSmart.png';
-import { noticias } from '../data/data';
-import { Footer } from '../components/Footer';
+import NoticiaPage from '../Pages/NoticiaPage';
+import { Footer } from '../components/footer';
 
 function Home() {
   return (
@@ -47,7 +47,7 @@ function Home() {
           </div>
 
           {/* Sección derecha */}
-          <div className="d-flex align-items-center gap-4 ms-auto">
+          <div className="d-flex align-items-center gap-4 ms-auto me-4">
             <Nav.Link
               href="/login"
               className="text-dark fw-medium text-decoration-none border-bottom border-2 border-dark pb-1 d-flex align-items-center gap-2"
@@ -60,25 +60,9 @@ function Home() {
         </Container>
       </Navbar>
 
-      {/* Contenido principal */}
-      <Container className="mt-5">
-        <h2 className="mb-4 text-center">Últimas Noticias</h2>
-        <Row xs={1} md={2} lg={3} className="g-4">
-          {noticias.map((noticia) => (
-            <Col key={noticia.id}>
-              <Card className="h-100">
-                <Card.Img variant="top" src={`https://via.placeholder.com/300x200?text=Noticia+${noticia.id}`} />
-                <Card.Body className="d-flex flex-column">
-                  <Card.Title>{noticia.titulo}</Card.Title>
-                  <Card.Text>{noticia.descripcion}</Card.Text>
-                  <Button variant="primary" className="mt-auto">
-                    Leer más
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+      {/* Contenido Principal */}
+      <Container className="flex-grow-1 my-5">
+        <NoticiaPage />
       </Container>
 
       {/* Footer estándar */}

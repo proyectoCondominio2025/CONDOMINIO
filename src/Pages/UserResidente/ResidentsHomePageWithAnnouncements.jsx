@@ -1,37 +1,10 @@
 import React from 'react';
-import { Container, Navbar, Nav, Form, FormControl, NavDropdown, Row, Col, Card } from 'react-bootstrap';
+import { Container, Navbar, Nav, Form, FormControl, NavDropdown } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
 import { Footer } from '../../components/footer';
+import NoticiaPage from '../NoticiaPage';
 
 export const ResidentsHomePageWithAnnouncements = () => {
-  const noticias = [
-    {
-      titulo: "Gobierno anuncia nuevo plan de seguridad pública",
-      categoria: "POLÍTICA",
-      autor: "La Tercera",
-      fecha: "26 abril 2025",
-      resumen: "El gobierno presentó un paquete de medidas para reforzar la seguridad en las principales ciudades del país.",
-      imagen: "https://www.subinterior.gob.cl/media/2025/04/DSC_3770.jpg"
-    },
-    {
-      titulo: "Universidad de Chile gana clásico ante Colo-Colo",
-      categoria: "DEPORTES",
-      autor: "Emol Deportes",
-      fecha: "25 abril 2025",
-      resumen: "Con un gol en los minutos finales, la U se llevó el triunfo en el Estadio Monumental tras 23 años.",
-      imagen: "https://static.emol.cl/emol50/Fotos/2024/03/10/file_20240310201401.jpg"
-    },
-    {
-      titulo: "Precio del dólar baja a mínimos de seis meses",
-      categoria: "ECONOMÍA",
-      autor: "Diario Financiero",
-      fecha: "25 abril 2025",
-      resumen: "El tipo de cambio cerró en $850, su menor nivel desde octubre, impulsado por datos positivos de inflación.",
-      imagen: "https://www.df.cl/noticias/site/artic/20250314/imag/foto_0000004220250314084652/dolar-2025.png"
-    },
-  ];
-  
-
   return (
     <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: '#E9E9EC' }}>
       
@@ -73,7 +46,7 @@ export const ResidentsHomePageWithAnnouncements = () => {
           </div>
 
           {/* Sección derecha */}
-          <div className="d-flex align-items-center gap-4 ms-auto">
+          <div className="d-flex align-items-center gap-4 ms-auto me-4">
             <Nav.Link
               href="/login"
               className="text-dark fw-medium text-decoration-none border-bottom border-2 border-dark pb-1"
@@ -117,47 +90,7 @@ export const ResidentsHomePageWithAnnouncements = () => {
 
       {/* Contenido principal */}
       <Container fluid className="flex-grow-1 mb-5">
-        <Row className="g-4">
-
-          {/* Sección Podcast */}
-          <Col md={3}>
-            <div className="p-3 bg-white shadow-sm rounded h-100">
-              <h5 className="fw-bold">🎙️ Podcast Farid Dieck</h5>
-              <p className="small">FARID cuenta el MEJOR CONSEJO de AMOR que ha ESCUCHADO | Relato y Reflexiones</p>
-              <video controls style={{ width: '100%', borderRadius: '8px' }}>
-                <source src="https://example.com/video.mp4" type="video/mp4" />
-                Tu navegador no soporta el video.
-              </video>
-              <small className="d-block mt-2">22:18 - Farid Dieck</small>
-            </div>
-          </Col>
-
-          {/* Sección Noticias */}
-          <Col md={9}>
-            <Row className="g-4">
-              {noticias.map((noticia, idx) => (
-                <Col key={idx} md={6}>
-                  <Card className="h-100 shadow-sm">
-                    <Card.Img
-                      variant="top"
-                      src="https://via.placeholder.com/300x150"
-                      style={{ objectFit: 'cover', height: '150px' }}
-                    />
-                    <Card.Body>
-                      <small className="text-uppercase text-muted">{noticia.categoria}</small>
-                      <Card.Title className="mt-2">{noticia.titulo}</Card.Title>
-                      <Card.Text className="small">{noticia.resumen}</Card.Text>
-                      <div className="mt-3 text-muted small">
-                        {noticia.autor} <br /> {noticia.fecha}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </Col>
-
-        </Row>
+        <NoticiaPage/>
       </Container>
 
       {/* Footer */}
