@@ -57,7 +57,6 @@ const HistorialPagoPage = () => {
         <Nav className="gap-3">
           <Nav.Link href="/" className="text-dark fw-medium px-2">INICIO</Nav.Link>
           <Nav.Link href="/" className="text-dark fw-medium px-2">ANUNCIO</Nav.Link>
-          <Nav.Link href="#" className="text-dark fw-medium px-2">HISTORIAL DE PAGOS</Nav.Link>
           <Nav.Link href="/profile" className="text-dark fw-medium px-2">PERFIL</Nav.Link>
           <Nav.Link href="/contacto" className="text-dark fw-medium px-2">CONTACTO</Nav.Link>
         </Nav>
