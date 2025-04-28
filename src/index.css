@@ -56,3 +56,8 @@ body {
 .rounded-pill:focus {
   box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
 }
+
+.modal-backdrop.show {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.8);
+}
