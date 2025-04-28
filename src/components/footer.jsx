@@ -1,8 +1,18 @@
-import React from 'react';
-import { Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Modal, Button } from 'react-bootstrap';
 import { FaLinkedinIn, FaFacebookF, FaXTwitter } from 'react-icons/fa6';
 
 export const Footer = () => {
+  const [show, setShow] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', body: '' });
+
+  const handleShow = (title, body) => {
+    setModalContent({ title, body });
+    setShow(true);
+  };
+
+  const handleClose = () => setShow(false);
+
   return (
     <footer style={{ backgroundColor: '#AFD3D1' }} className="py-5">
       <Container fluid className="px-5">
@@ -28,9 +38,26 @@ export const Footer = () => {
 
           {/* Links */}
           <div className="d-flex flex-wrap justify-content-center gap-4 small">
-            <a href="#" className="text-dark text-decoration-none">Sobre nosotros</a>
-            <a href="#" className="text-dark text-decoration-none">Términos y condiciones</a>
-            <a href="#" className="text-dark text-decoration-none">Política de cookies</a>
+            <button 
+              onClick={() => handleShow('Sobre nosotros', 'Somos una empresa dedicada a mejorar el acceso inteligente a tu comunidad.')}
+              className="btn btn-link text-dark text-decoration-none p-0"
+            >
+              Sobre nosotros
+            </button>
+
+            <button 
+              onClick={() => handleShow('Términos y condiciones', 'Estos son los términos y condiciones para el uso de nuestros servicios.')}
+              className="btn btn-link text-dark text-decoration-none p-0"
+            >
+              Términos y condiciones
+            </button>
+
+            <button 
+              onClick={() => handleShow('Política de cookies', 'Utilizamos cookies para mejorar tu experiencia en nuestro sitio web.')}
+              className="btn btn-link text-dark text-decoration-none p-0"
+            >
+              Política de cookies
+            </button>
           </div>
 
           {/* Copyright */}
@@ -39,6 +66,23 @@ export const Footer = () => {
           </div>
         </div>
       </Container>
+
+      {/* Modal */}
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalContent.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {modalContent.body}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </footer>
   );
 };
+
+export default Footer;
