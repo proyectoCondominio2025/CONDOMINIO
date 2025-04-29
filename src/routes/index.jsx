@@ -31,7 +31,7 @@ export const RoutesComponent = createBrowserRouter([
     element: <NoticiaPage/>,
   },
   {
-    path: '/ForgotPassowrd',
+    path: '/Forgot-passowrd',
     element: <ForgotPassaword/>,
   },
   {
@@ -39,11 +39,11 @@ export const RoutesComponent = createBrowserRouter([
     element: <IngresoVisita/>,
   },
   {
-    path: '/listaVehiculo',
+    path: '/lista-vehiculo',
     element: <ListaVehiculo/>,
   },
   {
-    path: '/listaVisita',
+    path: '/lista-visita',
     element: <ListaVisita/>,
   },
   {
@@ -58,6 +58,9 @@ export const RoutesComponent = createBrowserRouter([
     path: '/profile',
     element: <UserProfilePage/>
   },
+    path: '/perfil',
+    element: <MiPerfil/>,
+  }
 ]);
 
 //   <Routes>
