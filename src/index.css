@@ -1,10 +1,10 @@
-
 @import "tailwindcss";
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
 body {
-  background-color: #afe9e6; /* Cambia el color por el que desees */
+  background-color: #afe9e6;
+  /* Cambia el color por el que desees */
 }
 
 .custom-navbar {
