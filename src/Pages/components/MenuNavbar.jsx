@@ -1,14 +1,14 @@
 import React from 'react'; 
 import { Outlet, Link } from 'react-router-dom'; 
 import { Navbar, Container, Nav } from 'react-bootstrap'; 
-import IngresoSmart from '../Logo/IngresoSmart.png'; 
+import IngresoSmart from '../../assets/IngresoSmart.png'; 
 
 const MenuNavbar = () => {
   return (
     <>
       <Navbar expand="lg" className="custom-navbar">
         <Container>
-          <Navbar.Brand as={Link} to="/home" className="d-flex align-items-center">
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src={IngresoSmart} 
               alt="Logo"
@@ -20,8 +20,8 @@ const MenuNavbar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/home" className="text-black" activeClassName="active">Inicio</Nav.Link>
-              <Nav.Link as={Link} to="/noticia" className="text-black" activeClassName="active">Noticias</Nav.Link>
+              <Nav.Link as={Link} to="/" className="text-black" activeClassName="active">Inicio</Nav.Link>
+              {/* <Nav.Link as={Link} to="/" className="text-black" activeClassName="active">Noticias</Nav.Link> */}
               <Nav.Link as={Link} to="/contacto" className="text-black" activeClassName="active">Formulario Contacto</Nav.Link>
             </Nav>
             <Nav className="ms-auto">

@@ -10,59 +10,7 @@ const HistorialPagoPage = () => {
   ];
 
   return (
-    <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: '#E9E9EC' }}>
-      
-      {/* Navbar */}
-      <Navbar expand="lg" className="border-bottom py-0" style={{ backgroundColor: '#AFD3D1', minHeight: '80px' }}>
-        <Container fluid className="h-100 px-0">
-
-          {/* Logo */}
-          <Navbar.Brand className="p-0 m-0 d-flex align-items-center" style={{ height: '100%' }}>
-            <a href="/" className="d-flex align-items-center" style={{ height: '100%' }}>
-              <img
-                src="/src/Logo/IngresoSmart.png"
-                alt="Logo"
-                style={{
-                  height: '100%',
-                  width: '85px',
-                  objectFit: 'contain',
-                  display: 'block'
-                }}
-              />
-            </a>
-          </Navbar.Brand>
-
-
-          {/* Buscador */}
-          <div className="d-flex align-items-center w-100 ms-3">
-            <Form style={{ width: '250px' }}>
-              <FormControl
-                type="search"
-                placeholder="Buscar"
-                className="rounded-pill px-3 bg-white"
-                style={{
-                  height: '38px',
-                  fontSize: '0.9rem',
-                  boxShadow: 'none',
-                }}
-              />
-            </Form>
-          </div>
-
-        </Container>
-      </Navbar>
-
-      {/* Navegación secundaria */}
-      <div className="d-flex justify-content-center my-3">
-        <Nav className="gap-3">
-          <Nav.Link href="/" className="text-dark fw-medium px-2">INICIO</Nav.Link>
-          <Nav.Link href="/" className="text-dark fw-medium px-2">ANUNCIO</Nav.Link>
-          <Nav.Link href="/profile" className="text-dark fw-medium px-2">PERFIL</Nav.Link>
-          <Nav.Link href="/contacto" className="text-dark fw-medium px-2">CONTACTO</Nav.Link>
-        </Nav>
-      </div>
-
-      {/* Main Content */}
+    <div className="d-flex flex-column min-vh-100">
       <Container fluid className="px-5 my-4 flex-grow-1">
         
         {/* Título */}
@@ -112,7 +60,7 @@ const HistorialPagoPage = () => {
       </Container>
 
       {/* Footer */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

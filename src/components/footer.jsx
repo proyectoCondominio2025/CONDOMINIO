@@ -14,7 +14,7 @@ export const Footer = () => {
   const handleClose = () => setShow(false);
 
   return (
-    <footer style={{ backgroundColor: '#AFD3D1' }} className="py-5">
+    <footer style={{ background: 'linear-gradient(to right, #afe9e6, #305f72)' }} className="py-5">
       <Container fluid className="px-5">
         <div className="d-flex flex-column align-items-center gap-4">
           
