@@ -1,15 +1,19 @@
 // src/Pages/LoginPage.jsx
-import React from 'react';
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col, Card, Alert, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
 function LoginPage() {
+  const [loading, setLoading] = useState(false); // Estado para el loading
+  const [error, setError] = useState(null); // Estado para mostrar error global
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      rememberMe: false, // Campo para recordar al usuario
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -19,10 +23,25 @@ function LoginPage() {
         .min(6, 'La contraseña debe tener al menos 6 caracteres')
         .required('La contraseña es obligatoria'),
     }),
-    onSubmit: (values) => {
-      console.log('Email:', values.email);
-      console.log('Password:', values.password);
-      // Aquí podrías hacer la autenticación
+    onSubmit: async (values) => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // Aquí puedes hacer la lógica de autenticación, por ejemplo:
+        // const response = await authService.login(values.email, values.password);
+
+        // Simulación de autenticación exitosa
+        setTimeout(() => {
+          console.log('Email:', values.email);
+          console.log('Password:', values.password);
+          setLoading(false); // Finaliza el loading
+          // Redirige al usuario o realiza alguna otra acción.
+        }, 2000);
+      } catch (error) {
+        setLoading(false);
+        setError('Error al iniciar sesión. Verifica tus credenciales.');
+      }
     },
   });
 
@@ -32,6 +51,10 @@ function LoginPage() {
         <Col md={6}>
           <Card className="p-4 shadow rounded-4">
             <h3 className="text-center mb-4">Iniciar Sesión</h3>
+
+            {/* Mensaje de error general */}
+            {error && <Alert variant="danger">{error}</Alert>}
+
             <Form noValidate onSubmit={formik.handleSubmit}>
               <Form.Group controlId="formEmail">
                 <Form.Label>Correo Electrónico</Form.Label>
@@ -65,12 +88,34 @@ function LoginPage() {
                 </Form.Control.Feedback>
               </Form.Group>
 
+              <Form.Group className="mt-3" controlId="formRememberMe">
+                <Form.Check
+                  type="checkbox"
+                  name="rememberMe"
+                  label="Recordarme"
+                  checked={formik.values.rememberMe}
+                  onChange={formik.handleChange}
+                />
+              </Form.Group>
+
               <div className="text-center mt-3">
                 <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>
               </div>
 
-              <Button variant="primary" type="submit" className="w-100 mt-4">
-                Ingresar
+              {/* Botón de enviar */}
+              <Button
+                variant="primary"
+                type="submit"
+                className="w-100 mt-4"
+                disabled={loading} // Desactiva el botón mientras se está enviando
+              >
+                {loading ? (
+                  <>
+                    <Spinner animation="border" size="sm" /> Cargando...
+                  </>
+                ) : (
+                  'Ingresar'
+                )}
               </Button>
             </Form>
           </Card>

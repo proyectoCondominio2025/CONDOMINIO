@@ -8,44 +8,63 @@ import ForgotPassaword from '../Pages/ForgotPassword';
 import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
-import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
-import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
-import { UserProfilePage } from '../Pages/UserProfilePage'; 
+
+//import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
+//import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
+//import { UserProfilePage } from '../Pages/UserProfilePage'; 
+
+import MiPerfil from '../Pages/MiPerfilPage';
+import MenuNavbar from '../Pages/components/MenuNavbar';
+
+
 
 export const RoutesComponent = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage/>,
-    index: true
+    element: <MenuNavbar />,
+    children: [
+      {
+        path: 'home',
+        element: <HomePage />
+      },
+      {
+        path: '/perfil',
+        element: <MiPerfil />,
+      },
+
+      {
+        path: '/contacto',
+        element: <ContactoPage />,
+      },
+      {
+        path: '/noticia',
+        element: <NoticiaPage />,
+      },
+    ]
   },
-  {
-    path: '/contacto',
-    element: <ContactoPage/>,
-  },
+
   {
     path: '/login',
-    element: <LoginPage/>,
+    element: <LoginPage />,
   },
+
   {
-    path: '/noticia',
-    element: <NoticiaPage/>,
-  },
-  {
-    path: '/Forgot-passowrd',
-    element: <ForgotPassaword/>,
+    path: '/forgot-password' ,
+    element: <ForgotPassaword />,
   },
   {
     path: '/ingreso-visita',
-    element: <IngresoVisita/>,
+    element: <IngresoVisita />,
   },
   {
     path: '/lista-vehiculo',
-    element: <ListaVehiculo/>,
+    element: <ListaVehiculo />,
   },
   {
     path: '/lista-visita',
-    element: <ListaVisita/>,
+    element: <ListaVisita />,
   },
+//roberto
   {
     path: '/residentesAnuncios',
     element: <ResidentsHomePageWithAnnouncements/>,
@@ -61,13 +80,8 @@ export const RoutesComponent = createBrowserRouter([
     path: '/perfil',
     element: <MiPerfil/>,
   }
+
 ]);
 
-//   <Routes>
-//     <Route path="/home" element={<HomePage />} />
-//     <Route path="/contacto" element={<ContactoPage />} />
-//     <Route path="/login" element={<LoginPage />} />
-//   </Routes>
-// );
 
 

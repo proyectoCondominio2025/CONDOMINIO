@@ -1,10 +1,8 @@
 import React from 'react';
 import { Navbar, Nav, Container, Form, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
-import IngresoSmart from '../Logo/IngresoSmart.png';
-import NoticiaPage from '../Pages/NoticiaPage';
-import { Footer } from '../components/footer';
+import { noticias } from '../data/data';
+
 
 function Home() {
   return (
@@ -46,19 +44,10 @@ function Home() {
             </div>
           </div>
 
-          {/* Sección derecha */}
-          <div className="d-flex align-items-center gap-4 ms-auto me-4">
-            <Nav.Link
-              href="/login"
-              className="text-dark fw-medium text-decoration-none border-bottom border-2 border-dark pb-1 d-flex align-items-center gap-2"
-              style={{ borderRadius: 0 }}>
-              Iniciar sesión
-              <FaUserCircle size={20} />
-            </Nav.Link>
-          </div>
+  return (
+    <>
+      {/*  */}
 
-        </Container>
-      </Navbar>
 
       {/* Contenido Principal */}
       <Container className="flex-grow-1 my-5">

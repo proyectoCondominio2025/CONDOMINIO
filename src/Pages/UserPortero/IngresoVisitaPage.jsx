@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
 
 // Validaciones con Yup
 const validationSchema = Yup.object({
@@ -22,7 +22,10 @@ const validationSchema = Yup.object({
 });
 
 function IngresoVisita() {
-  
+  const [loading, setLoading] = useState(false); // Estado para carga
+  const [successMessage, setSuccessMessage] = useState(null); // Estado para mensaje de éxito
+  const [errorMessage, setErrorMessage] = useState(null); // Estado para mensaje de error
+
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -33,13 +36,33 @@ function IngresoVisita() {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log('Datos enviados:', values);
+      setLoading(true); // Inicia carga
+      setSuccessMessage(null); // Resetea mensaje de éxito
+      setErrorMessage(null); // Resetea mensaje de error
+      
+      console.log('Datos del formulario:', values);
+
+      // Simulando envío de datos
+      setTimeout(() => {
+        // Simulamos éxito en el envío de datos
+        if (values.rut !== '12345678-9') {
+          setSuccessMessage('Visita registrada con éxito');
+        } else {
+          setErrorMessage('Error al registrar la visita');
+        }
+        setLoading(false); // Finaliza carga
+      }, 2000);
     },
   });
 
   return (
     <Container className="mt-5">
       <h2>Ingreso de visita</h2>
+
+      {/* Mensajes de éxito o error */}
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+
       <Form noValidate onSubmit={formik.handleSubmit}>
         <Form.Group className="mb-3" controlId="formNombre">
           <Form.Label>Nombre</Form.Label>
@@ -119,8 +142,15 @@ function IngresoVisita() {
           </Form.Group>
         )}
 
-        <Button variant="primary" type="submit">
-          Ingreso
+        {/* Botón de envío */}
+        <Button variant="primary" type="submit" disabled={loading} className="w-100">
+          {loading ? (
+            <>
+              <Spinner animation="border" size="sm" /> Cargando...
+            </>
+          ) : (
+            'Ingreso'
+          )}
         </Button>
       </Form>
     </Container>
