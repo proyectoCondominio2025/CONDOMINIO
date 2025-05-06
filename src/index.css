@@ -20,3 +20,122 @@ body {
     color: #0b0c0e;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Efecto de sombra suave */
   }
+
+
+/* Fondo celeste para el navbar */
+.custom-navbar {
+  background-color:  #afe9e6; /* Celeste */
+}
+
+.custom-navbar .navbar-nav .nav-link {
+  color: #000000 !important; /* Letras negras */
+  font-weight: bold; /* Texto en negrita */
+}
+
+.custom-navbar .navbar-nav .nav-link:hover {
+  color: #ffffff !important; /* Cambiar a blanco cuando pase el mouse */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.custom-navbar .navbar-nav .nav-link.active {
+  color: #ffffff !important; /* Cambiar a blanco cuando se selecciona el enlace */
+  background-color: #0288d1; /* Fondo azul cuando está activo */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.custom-navbar .navbar-brand img {
+  border-radius: 0%; /* Eliminamos el redondeo del borde */
+  border: 2px solid #ffffff; /* Borde blanco en el logo */
+}
+
+.logo-expand-effect {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.logo-expand-effect:active {
+  transform: scale(2.5);/* Antes era 1.2 */
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-color: #ffffff; /* Cambiar color del ícono de hamburguesa */
+}
+
+/* Estilos para el botón de iniciar sesión */
+.login-btn {
+  background-color: #00aaff; /* Azul celeste */
+  color: white;
+  border: 2px solid #00aaff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #0077cc; /* Azul más oscuro al hacer hover */
+  transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.login-btn i {
+  font-size: 1.8rem;
+}
+
+.login-btn div {
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.login-btn:hover i,
+.login-btn:hover div {
+  color: white;
+}
+
+/*FORMULARIOS DE CONTACTO */
+/* Estilo general para los inputs */
+.custom-input {
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.custom-input.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+/* Estilo para el botón de enviar */
+.submit-btn {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-size: 1.1rem;
+  padding: 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.submit-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Título centrado y estilizado */
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Sombra suave a los inputs y campos */
+.mb-4 {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

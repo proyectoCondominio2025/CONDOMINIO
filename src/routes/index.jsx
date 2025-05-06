@@ -9,6 +9,7 @@ import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import MiPerfil from '../Pages/MiPerfilPage';
+import MenuNavbar from '../Pages/components/MenuNavbar';
 
 
 
@@ -16,41 +17,51 @@ import MiPerfil from '../Pages/MiPerfilPage';
 export const RoutesComponent = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage/>,
-    index: true
+    element: <MenuNavbar />,
+    children: [
+      {
+        path: 'home',
+        element: <HomePage />
+      },
+      {
+        path: '/perfil',
+        element: <MiPerfil />,
+      },
+
+      {
+        path: '/contacto',
+        element: <ContactoPage />,
+      },
+      {
+        path: '/noticia',
+        element: <NoticiaPage />,
+      },
+    ]
   },
-  {
-    path: '/contacto',
-    element: <ContactoPage/>,
-  },
+
   {
     path: '/login',
-    element: <LoginPage/>,
+    element: <LoginPage />,
   },
+
   {
-    path: '/noticia',
-    element: <NoticiaPage/>,
-  },
-  {
-    path: '/Forgot-passowrd',
-    element: <ForgotPassaword/>,
+    path: '/forgot-password' ,
+    element: <ForgotPassaword />,
   },
   {
     path: '/ingreso-visita',
-    element: <IngresoVisita/>,
+    element: <IngresoVisita />,
   },
   {
     path: '/lista-vehiculo',
-    element: <ListaVehiculo/>,
+    element: <ListaVehiculo />,
   },
   {
     path: '/lista-visita',
-    element: <ListaVisita/>,
+    element: <ListaVisita />,
   },
-  {
-    path: '/perfil',
-    element: <MiPerfil/>,
-  }
+
+
 ]);
 
 //   <Routes>
