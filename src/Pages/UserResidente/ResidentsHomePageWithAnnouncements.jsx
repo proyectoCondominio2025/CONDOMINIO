@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Navbar, Nav, Form, FormControl, NavDropdown } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
-import { Footer } from '../../components/footer';
+import { Footer } from '../components/footer';
 import NoticiaPage from '../NoticiaPage';
 
 export const ResidentsHomePageWithAnnouncements = () => {

@@ -15,7 +15,7 @@ import { UserProfilePage } from '../Pages/UserProfilePage';
 
 import MiPerfil from '../Pages/MiPerfilPage';
 import MenuNavbar from '../Pages/components/MenuNavbar';
-import { Footer } from '../components/footer';
+import { Footer } from '../Pages/components/footer';
 
 
 

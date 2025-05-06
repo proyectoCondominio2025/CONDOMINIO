@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Navbar, Nav, Form, FormControl, Table } from 'react-bootstrap';
-import { Footer } from '../../components/footer';
+import { Footer } from '../components/footer';
 import { FaSearch } from 'react-icons/fa';
 
 const HistorialPagoPage = () => {
