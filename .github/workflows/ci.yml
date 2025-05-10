@@ -24,3 +24,9 @@ jobs:
 
       - name: Build del proyecto
         run: npm run build
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ejecutar linter
+        run : npm run lint
