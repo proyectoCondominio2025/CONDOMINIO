@@ -10,9 +10,8 @@ import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import MiPerfil from '../Pages/MiPerfilPage';
 import MenuNavbar from '../Pages/components/MenuNavbar';
-
-
-
+import HistorialPagos from '../Pages/UserResidente/HistorialPagoPage';
+import DetallePago from '../Pages/UserResidente/DetallePago';
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -59,6 +58,14 @@ export const RoutesComponent = createBrowserRouter([
   {
     path: '/lista-visita',
     element: <ListaVisita />,
+  },
+  {
+    path: '/historial-pago',
+    element: <HistorialPagos/>,
+  },
+  {
+    path: '/detalle/:folio',
+    element: <DetallePago />,
   },
 
 
