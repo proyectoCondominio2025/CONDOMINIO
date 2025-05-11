@@ -18,6 +18,8 @@ import MenuNavbar from '../Pages/components/MenuNavbar';
 import { Footer } from '../Pages/components/footer';
 
 
+import HistorialPagos from '../Pages/UserResidente/HistorialPagoPage';
+import DetallePago from '../Pages/UserResidente/DetallePago';
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -62,14 +64,11 @@ export const RoutesComponent = createBrowserRouter([
     element: <ListaVisita />,
   },
   {
-    path: '/historialPago',
-    element: <PaymentHistoryPage/>,
+    path: '/historial-pago',
+    element: <HistorialPagos/>,
   },
 
 ]);
 
-// {
-//   path: '/historialPago',
-//   element: <PaymentHistoryPage/>,
-// },
+
 

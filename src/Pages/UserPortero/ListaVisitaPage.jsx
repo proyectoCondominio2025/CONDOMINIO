@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Container, Row, Col } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa'; // ícono de plus
+import { useNavigate } from 'react-router-dom';
 
 function ListaVisita() {
   const [autos, setAutos] = useState([
@@ -9,6 +10,8 @@ function ListaVisita() {
     { id: 3, nombre: 'jose perez', Rut: '26493126-6', casa: '103', tieneAuto:'si' , patente:'45678', estado: 'Adentro' },
     { id: 4, nombre: 'nio perez', Rut: '26493126-6', casa: '103', tieneAuto:'no' , patente:'45678', estado: 'Adentro' }
   ]);
+
+  const navigate = useNavigate();
 
   const eliminarVisita = (id) => {
     const nuevosAutos = autos.filter(auto => auto.id !== id);
@@ -21,6 +24,8 @@ function ListaVisita() {
   };
 
   const agregarVisita = () => {
+    
+    navigate('/ingreso-visita');
     console.log('Agregar nueva visita');
     // Aquí podrías abrir un modal o redirigir a otra página
   };
