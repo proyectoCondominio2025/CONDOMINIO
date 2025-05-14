@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import IngresoSmart from '../Logo/IngresoSmart.png';
 import { noticias } from '../data/data';
 
-
+ 
 function Home() {
 
  
