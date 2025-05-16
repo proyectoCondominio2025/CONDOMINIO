@@ -69,11 +69,6 @@ export const RoutesComponent = createBrowserRouter([
     path: '/historial-pago',
     element: <HistorialPagos/>,
   },
-  {
-    path: '/detalle/:folio',
-    element: <DetallePago />,
-  },
-
 
 ]);
 
