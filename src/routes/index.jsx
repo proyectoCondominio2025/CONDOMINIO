@@ -3,7 +3,6 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from '../Pages/HomePage';
 import ContactoPage from '../Pages/ContactoPage';
 import LoginPage from '../Pages/LoginPage';
-import NoticiaPage from '../Pages/NoticiaPage';
 import ForgotPassaword from '../Pages/ForgotPassword';
 import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
@@ -15,6 +14,7 @@ import { UserProfilePage } from '../Pages/UserProfilePage';
 
 import MiPerfil from '../Pages/MiPerfilPage';
 import MenuNavbar from '../Pages/components/MenuNavbar';
+import MenuNavbarPortero from '../Pages/components/MenuNavbarPortero';
 import { Footer } from '../Pages/components/footer';
 
 
@@ -27,7 +27,6 @@ export const RoutesComponent = createBrowserRouter([
     element: <><MenuNavbar /><Footer /></>,
     children: [
       {
-        path: '/',
         element: <HomePage />,
         index: true
       },
@@ -46,23 +45,26 @@ export const RoutesComponent = createBrowserRouter([
   
     ]
   },
+      {
+        path: '/ingreso-visita',
+        element: <IngresoVisita />,
+      },
+      {
+        path: '/lista-vehiculo',
+        element: <ListaVehiculo />,
+      },
+      {
+        path: '/lista-visita',
+        element: <ListaVisita />,
+      },
+  
+    
+  
   {
     path: '/perfil',
     element: <MiPerfil />,
   },
   
-  {
-    path: '/ingreso-visita',
-    element: <IngresoVisita />,
-  },
-  {
-    path: '/lista-vehiculo',
-    element: <ListaVehiculo />,
-  },
-  {
-    path: '/lista-visita',
-    element: <ListaVisita />,
-  },
   {
     path: '/historial-pago',
     element: <HistorialPagos/>,
@@ -75,11 +77,5 @@ export const RoutesComponent = createBrowserRouter([
 
 ]);
 
-//   <Routes>
-//     <Route path="/home" element={<HomePage />} />
-//     <Route path="/contacto" element={<ContactoPage />} />
-//     <Route path="/login" element={<LoginPage />} />
-//   </Routes>
-// );
 
 

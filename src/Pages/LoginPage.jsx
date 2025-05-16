@@ -88,15 +88,6 @@ function LoginPage() {
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group className="mt-3" controlId="formRememberMe">
-                <Form.Check
-                  type="checkbox"
-                  name="rememberMe"
-                  label="Recordarme"
-                  checked={formik.values.rememberMe}
-                  onChange={formik.handleChange}
-                />
-              </Form.Group>
 
               <div className="text-center mt-3">
                 <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>

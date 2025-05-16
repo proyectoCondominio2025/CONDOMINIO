@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 import { Footer } from './components/footer';
 import { FaUserCircle } from 'react-icons/fa';
-import ProfileField from '../components/ProfileField';
+
 
 export const UserProfilePage = () => {
   return (
