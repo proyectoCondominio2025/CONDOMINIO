@@ -6,31 +6,120 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 2rem;
-      background-color: #f9f9f9;
+      background-color: #b2ebf2; /* celeste claro */
+      margin: 0;
+      padding: 1rem;
     }
-    .container {
-      background: white;
-      padding: 2rem;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #000;
+    }
+
+    .login-btn {
+      background-color: #03a9f4;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 2rem;
+      color: #333;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .card {
+      background-color: white;
+      padding: 1rem;
       border-radius: 12px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 280px;
     }
-    h1 { color: #333; }
-    a { color: #0077cc; }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background-color: #006eff;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🏡 Proyecto Condominio</h1>
-    <p>Sistema web para administración de condominios.</p>
 
-    <h2>🔗 Recursos</h2>
-    <ul>
-      <li><a href="https://github.com/proyectoCondominio2025/CONDOMINIO">Repositorio en GitHub</a></li>
-      <li><a href="https://github.com/proyectoCondominio2025/CONDOMINIO/wiki">Wiki del proyecto</a></li>
-    </ul>
+  <header>
+    <div>
+      <!-- Logo opcional -->
+      <strong>IS</strong>
+    </div>
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Formulario</a>
+      <a href="#">Contacto</a>
+    </nav>
+    <button class="login-btn">Iniciar sesión</button>
+  </header>
+
+  <h1>Últimas Noticias</h1>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Cambio en horario de ingreso</h3>
+      <p>A partir del próximo lunes, el horario de ingreso será a las 7:30 AM..</p>
+      <a href="#" class="btn">Leer más</a>
+    </div>
+
+    <div class="card">
+      <h3>Reunión de vecinos</h3>
+      <p>La próxima reunión será el 30 de abril a las 18:00 horas en el salón comunal..</p>
+      <a href="#" class="btn">Leer más</a>
+    </div>
+
+    <div class="card">
+      <h3>Mantenimiento del ascensor</h3>
+      <p>El ascensor del bloque B estará en mantenimiento el miércoles..</p>
+      <a href="#" class="btn">Leer más</a>
+    </div>
+
+    <div class="card">
+      <h3>Mantenimiento del ascensor</h3>
+      <p>El ascensor del bloque B estará en mantenimiento el miércoles..</p>
+      <a href="#" class="btn">Leer más</a>
+    </div>
   </div>
+
 </body>
 </html>
