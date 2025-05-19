@@ -4,16 +4,18 @@ import { Form, Button, Container, Row, Col, Card, Alert, Spinner } from 'react-b
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import api from '../../api/axios';
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 function LoginPage() {
   const [loading, setLoading] = useState(false); // Estado para el loading
-  const [error, setError] = useState(null); // Estado para mostrar error global
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      rememberMe: false, // Campo para recordar al usuario
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -25,22 +27,39 @@ function LoginPage() {
     }),
     onSubmit: async (values) => {
       setLoading(true);
-      setError(null);
-      
-      try {
-        // Aquí puedes hacer la lógica de autenticación, por ejemplo:
-        // const response = await authService.login(values.email, values.password);
 
-        // Simulación de autenticación exitosa
-        setTimeout(() => {
-          console.log('Email:', values.email);
-          console.log('Password:', values.password);
-          setLoading(false); // Finaliza el loading
-          // Redirige al usuario o realiza alguna otra acción.
-        }, 2000);
+      try {
+        const response = await api.post(
+          'token/',
+          {
+            correo: values.email,
+            password: values.password,
+          }
+        );
+        // Guarda los tokens
+        localStorage.setItem('accessToken', response.data.access);
+        localStorage.setItem('refreshToken', response.data.refresh);
+
+        setLoading(false);
+
+        Swal.fire({
+          icon: 'success',
+          title: '¡Bienvenido!',
+          text: 'Has iniciado sesión correctamente.',
+          timer: 2000,
+          showConfirmButton: false,
+        }).then(() => {
+          navigate("/perfil");
+        });
+
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setLoading(false);
-        setError('Error al iniciar sesión. Verifica tus credenciales.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Correo o contraseña incorrectos.',
+        });
       }
     },
   });
@@ -51,10 +70,6 @@ function LoginPage() {
         <Col md={6}>
           <Card className="p-4 shadow rounded-4">
             <h3 className="text-center mb-4">Iniciar Sesión</h3>
-
-            {/* Mensaje de error general */}
-            {error && <Alert variant="danger">{error}</Alert>}
-
             <Form noValidate onSubmit={formik.handleSubmit}>
               <Form.Group controlId="formEmail">
                 <Form.Label>Correo Electrónico</Form.Label>

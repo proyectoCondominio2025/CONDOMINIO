@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { noticias } from '../data/data';
 
-
+ 
 function Home() {
 
  
