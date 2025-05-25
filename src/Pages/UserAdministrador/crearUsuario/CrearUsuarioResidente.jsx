@@ -63,7 +63,6 @@ export default function CrearUsuarioResidente() {
 
                 try {
                     const response = await api.post('residentes/', usuarioFinal);
-
                     console.log('Usuario creado:', response.data);
                     resetForm();
 
