@@ -27,6 +27,9 @@ import PagoExitoPage from '../Pages/pago/PagoExitoso';
 import PagoFallidoPage from '../Pages/pago/PagoFallido';
 import PagoPendientePage from '../Pages/pago/PagoPendiente';
 import LayoutAdmin from '../Pages/layout/LayoutAdmin';
+import LayoutResidente from '../Pages/layout/LayoutResidente';
+import HomeResidente from '../Pages/UserResidente/HomeResidente';
+import PerfilResidente from '../Pages/UserResidente/PerfilResidente';
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -90,28 +93,24 @@ export const RoutesComponent = createBrowserRouter([
   },
 
   {
-    path: '/ingreso-visita',
-    element: <IngresoVisita />,
+    path: '/',
+    element: <LayoutResidente/>,
+    children: [
+      {
+        path: '/home-residente',
+        element: <HomeResidente />,
+      },
+      {
+        path: '/historial-pago',
+        element: <HistorialPagos />,
+      },
+      {
+        path: '/perfil-residente',
+        element: <PerfilResidente />,
+      },
+    ]
+      
   },
-  {
-    path: '/lista-vehiculo',
-    element: <ListaVehiculo />,
-  },
-  {
-    path: '/lista-visita',
-    element: <ListaVisita />,
-  },
-
-  {
-    path: '/perfil',
-    element: <MiPerfil />,
-  },
-
-  {
-    path: '/historial-pago',
-    element: <HistorialPagos />,
-  },
-  
   
   {
     path: '/pago',
@@ -130,7 +129,25 @@ export const RoutesComponent = createBrowserRouter([
         element: < PagoPendientePage />,
       },
     ]
-  }
+  },
+  {
+    path: '/ingreso-visita',
+    element: <IngresoVisita />,
+  },
+  {
+    path: '/lista-vehiculo',
+    element: <ListaVehiculo />,
+  },
+  {
+    path: '/lista-visita',
+    element: <ListaVisita />,
+  },
+
+  {
+    path: '/perfil',
+    element: <MiPerfil />,
+  },
+
 ]);
 
 

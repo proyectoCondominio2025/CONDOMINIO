@@ -16,8 +16,4 @@ repos:
         entry: powershell.exe -NoProfile -ExecutionPolicy Bypass -File pre-commit-hooks/pre-push.ps1
         language: system
         stages: [pre-rebase]
-      - id: check-pre-rebase
-        name: Check pre rebase
-        entry: powershell.exe -NoProfile -ExecutionPolicy Bypass -File pre-commit-hooks/pre-rebase.ps1
-        language: system
-        stages: [pre-rebase]
+  

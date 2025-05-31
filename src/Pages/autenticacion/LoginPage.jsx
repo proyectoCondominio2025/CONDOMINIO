@@ -40,6 +40,9 @@ function LoginPage() {
         localStorage.setItem('accessToken', response.data.access);
         localStorage.setItem('refreshToken', response.data.refresh);
 
+        // 🚩 Aquí va el tipo:
+        const tipo = response.data.tipo_de_usuario; // <-- debe venir del backend
+
         setLoading(false);
 
         Swal.fire({
@@ -49,7 +52,15 @@ function LoginPage() {
           timer: 2000,
           showConfirmButton: false,
         }).then(() => {
-          navigate("/perfil");
+          if (tipo === "residente") {
+            navigate("/home-residente");
+          } else if (tipo === "portero") {
+            navigate("/home-portero");
+          } else if (tipo === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
         });
 
       // eslint-disable-next-line no-unused-vars
