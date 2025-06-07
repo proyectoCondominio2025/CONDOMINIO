@@ -33,7 +33,7 @@ const AdminNavbar = () => {
               <Nav.Link as={Link} to="/admin" className='mx-3'>Home </Nav.Link>
               <Nav.Link as={Link} to="/admin/listar-usuarios" className='mx-3'>Crear/listar Usuario</Nav.Link>
               <Nav.Link as={Link} to="/admin/listar-noticias" className='mx-3'>Crear/listar Noticias</Nav.Link>
-              <Nav.Link as={Link} to="/admin/listar-pagos" className='mx-3'> Listar Pagos</Nav.Link>
+              <Nav.Link as={Link} to="/admin/listar-pagos" className='mx-3'>Pagos</Nav.Link>
 
             </Nav>
             <Nav className="ms-auto">

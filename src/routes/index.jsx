@@ -9,10 +9,11 @@ import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import CrearUsuarios from '../Pages/UserAdministrador/crearUsuario/CrearUsuarios';
 import ListaUsuarios from '../Pages/UserAdministrador/listaUsuarios';
+import PagosUsuarios from '../Pages/UserAdministrador/PagosUsuarios';
 import HomeAdmin from '../Pages/UserAdministrador/HomeAdmin';
 import ListaNoticias from '../Pages/UserAdministrador/ListaNoticias';
 import CrearNoticias from '../Pages/UserAdministrador/CrearNoticias';
-import ListarPagos from '../Pages/UserAdministrador/ListarPAgos';
+import ListarPagos from '../Pages/UserAdministrador/ListarPagos';
 import { ResidentsHomePageWithAnnouncements } from '../Pages/UserResidente/ResidentsHomePageWithAnnouncements';
 import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
 import { UserProfilePage } from '../Pages/UserProfilePage';
@@ -89,23 +90,27 @@ export const RoutesComponent = createBrowserRouter([
         path: '/admin/perfil',
         element: <MiPerfil />,
       },
+      {
+        path: '/admin/usuario-pagos/:id',
+        element: <PagosUsuarios />,
+      },
     ]
   },
 
   {
-    path: '/',
+    path: '/residente',
     element: <LayoutResidente/>,
     children: [
       {
-        path: '/home-residente',
+        path: '/residente',
         element: <HomeResidente />,
       },
       {
-        path: '/historial-pago',
+        path: '/residente/historial-pago',
         element: <HistorialPagos />,
       },
       {
-        path: '/perfil-residente',
+        path: '/residente/perfil-residente',
         element: <PerfilResidente />,
       },
     ]

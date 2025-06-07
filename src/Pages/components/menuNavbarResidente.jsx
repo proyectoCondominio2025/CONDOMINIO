@@ -1,17 +1,26 @@
-import React from 'react'; 
-import { Outlet, Link } from 'react-router-dom'; 
-import { Navbar, Container, Nav } from 'react-bootstrap'; 
-import IngresoSmart from '../../assets/IngresoSmart.png'; 
+import React from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import { Navbar, Container, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
+import IngresoSmart from '../../assets/IngresoSmart.png';
 import { FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const MenuNavbar = () => {
+
+  const navigate = useNavigate();
+
+  const cerrarSesion = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigate("/");
+  }
   return (
     <>
       <Navbar expand="lg" className="custom-navbar">
         <Container>
-          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+          <Navbar.Brand as={Link} to="/residente" className="d-flex align-items-center">
             <img
-              src={IngresoSmart} 
+              src={IngresoSmart}
               alt="Logo"
               width="50"
               height="50"
@@ -21,20 +30,16 @@ const MenuNavbar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/home-residente" className="text-black" activeClassName="active">Inicio</Nav.Link>
-              <Nav.Link as={Link} to="/historial-pago" className="text-black" activeClassName="active">Historial de pago</Nav.Link>
-              </Nav>
-               {/* Mi perfil a la derecha con icono */}
-                <Nav className="ms-auto ">
-                  <Nav.Link
-                    as={Link}
-                    to="/perfil-residente"
-                    className="text-black fw-semibold px-3 d-flex align-items-center gap-2"
-                  >
-                    <FaUserCircle size={22} className="me-1" />
-                  </Nav.Link>
-              </Nav>
-            
+              <Nav.Link as={Link} to="/residente" className="text-black" activeClassName="active">Inicio</Nav.Link>
+              <Nav.Link as={Link} to="/residente/historial-pago" className="text-black" activeClassName="active">Historial de pago</Nav.Link>
+            </Nav>
+
+            <Nav className="ms-auto">
+              <DropdownButton variant='outline-light' id="dropdown-basic-button" drop={'start'} title={<i class="bi bi-gear text-dark fs-5"></i>}>
+                <Dropdown.Item href="/residente/perfil-residente">Mi perfil</Dropdown.Item>
+                <Dropdown.Item onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>
+              </DropdownButton>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

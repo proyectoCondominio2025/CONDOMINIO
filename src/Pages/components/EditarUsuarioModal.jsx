@@ -41,9 +41,6 @@ function EditarUsuarioModal({ show, handleClose, usuario, onGuardar }) {
       });
       
       
-
-    console.log('Usuario en EditarUsuarioModal:', usuario);
-
     const initialValues = {
         nombre: usuario?.nombre || '',
         apellido: usuario?.apellido || '',

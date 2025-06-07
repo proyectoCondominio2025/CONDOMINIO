@@ -17,6 +17,7 @@ function ListaUsuarios() {
       try {
         const response = await api.get('ver-usuarios/');
         setUsuarios(response.data);
+        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError("No se pudieron cargar los usuarios.");
       } finally {
@@ -41,7 +42,71 @@ function ListaUsuarios() {
   }
 
   async function guardarEdicionUsuario(data) {
-    // ... igual que antes, no lo repito para que el ejemplo sea visual ...
+    try {
+
+      console.log(data)
+      console.log(usuarioSeleccionado)
+
+      if (usuarioSeleccionado.tipo_de_usuario == "portero") {
+        const newData = {
+          nombre: data.nombre,
+          apellido: data.apellido,
+          correo: data.correo,
+          telefono: data.telefono
+        }
+
+        Swal.fire({
+          title: 'Guardando cambios...',
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading()
+        });
+
+        const response = await api.patch(`usuarios/${usuarioSeleccionado.id}/editar/`, newData);
+
+        Swal.fire({
+          title: '¡Guardado exitoso!',
+          text: 'Los cambios se han guardado correctamente',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+        // Actualizar estado y cerrar modal
+        setUsuarios(prev => prev.map(u =>
+          u.id === usuarioSeleccionado.id ? { ...u, ...response.data } : u
+        ));
+
+      }
+      else {
+        Swal.fire({
+          title: 'Guardando cambios...',
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading()
+        });
+
+        const response = await api.patch(`residentes/${usuarioSeleccionado.id}/editar/`, data);
+
+
+        Swal.fire({
+          title: '¡Guardado exitoso!',
+          text: 'Los cambios se han guardado correctamente',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+
+        setUsuarios(prev => prev.map(u =>
+          u.id === usuarioSeleccionado.id ? { ...u, ...response.data } : u
+        ));
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error',
+        text: error.response?.data?.message || 'No se pudieron guardar los cambios',
+        icon: 'error'
+      });
+    }
   }
 
   function desactivarUsuario(usuario) {
@@ -60,6 +125,7 @@ function ListaUsuarios() {
           await api.delete(`usuarios/${usuario.id}/`);
           Swal.fire('Eliminado', `El usuario ${usuario.nombre} ha sido eliminado.`, 'success');
           setUsuarios(prev => prev.filter(u => u.id !== usuario.id));
+          // eslint-disable-next-line no-unused-vars
         } catch (err) {
           Swal.fire('Error', 'No se pudo desactivar el usuario.', 'error');
         }
@@ -101,7 +167,7 @@ function ListaUsuarios() {
                 transition-all duration-200
                 focus:outline-none focus:ring-2 focus:ring-indigo-400
                 active:scale-95"
-                  >
+              >
                 <FaUserPlus />
                 Crear Usuario
               </button>
@@ -112,11 +178,10 @@ function ListaUsuarios() {
             <table className="min-w-full text-base">
               <thead>
                 <tr className="bg-indigo-100 text-black">
-                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider"></th>
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">ID</th>
-                  <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Rut</th>
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Nombre</th>
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Apellido</th>
+                  <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Rut</th>
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Teléfono</th>
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">N°Casa</th>
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Patente</th>
@@ -128,7 +193,8 @@ function ListaUsuarios() {
               <tbody>
                 {usuarios.map(usuario => (
                   <tr key={usuario.id} className="border-b last:border-b-0 hover:bg-indigo-50 transition">
-                    
+                    <td className="px-4 py-3">{usuario.id}</td>
+
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         {/* Avatar circular */}
@@ -139,7 +205,7 @@ function ListaUsuarios() {
                         />
                         <div className="flex flex-col justify-center min-w-0">
                           <span
-                            className="font-semibold text-sm text-gray-800 truncate"
+                            className="font-semibold text-sm text-gray-800"
                             title={usuario.nombre}
                           >
                             {usuario.nombre}
@@ -147,11 +213,8 @@ function ListaUsuarios() {
                         </div>
                       </div>
                     </td>
-
-                    <td className="px-4 py-3">{usuario.id}</td>
-                    <td className="px-4 py-3">{usuario.rut}</td>
-                    <td className="px-4 py-3 font-semibold">{usuario.nombre}</td>
                     <td className="px-4 py-3 font-semibold">{usuario.apellido}</td>
+                    <td className="px-4 py-3">{usuario.rut}</td>
                     <td className="px-4 py-3">{usuario.telefono}</td>
                     <td className="px-4 py-3">{usuario.numero_casa ?? "N/A"}</td>
                     <td className="px-4 py-3">{usuario.vehiculo_placa ?? "Sin vehiculo"}</td>

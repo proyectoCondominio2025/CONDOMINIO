@@ -20,6 +20,7 @@ function ListaNoticias() {
       try {
         const response = await api.get('anuncios/');
         setNoticias(response.data);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError("No se pudieron cargar las noticias.");
       } finally {
@@ -45,6 +46,7 @@ function ListaNoticias() {
           await api.delete(`anuncios/${noticia.id}/`);
           Swal.fire('Eliminado', `La noticia "${noticia.titulo}" ha sido eliminada.`, 'success');
           setNoticias(prev => prev.filter(n => n.id !== noticia.id));
+        // eslint-disable-next-line no-unused-vars
         } catch (err) {
           Swal.fire('Error', 'No se pudo eliminar la noticia.', 'error');
         }
@@ -67,6 +69,7 @@ function ListaNoticias() {
       );
       Swal.fire('Éxito', 'Noticia editada correctamente', 'success');
       setShowModal(false);
+    // eslint-disable-next-line no-unused-vars
     } catch (err) {
       Swal.fire('Error', 'No se pudo editar la noticia.', 'error');
     }
