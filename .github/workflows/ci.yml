@@ -59,3 +59,19 @@ jobs:
         run: npm audit --audit-level=high --production
 
         # maria
+  Listar Logs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Mostrar últimos 5 commits
+        run: git log -n 5 --pretty=format:"%h - %an: %s"
