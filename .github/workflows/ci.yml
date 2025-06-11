@@ -75,3 +75,21 @@ jobs:
 
       - name: Mostrar últimos 5 commits
         run: git log -n 5 --pretty=format:"%h - %an: %s"
+    
+    mostrar-archivo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Verificar y mostrar contenido de archivo
+        run: |
+          ARCHIVO="README.md"
+
+          if [ -f "$ARCHIVO" ]; then
+            echo "✅ El archivo '$ARCHIVO' existe. Mostrando contenido:"
+            cat "$ARCHIVO"
+          else
+            echo "⚠ El archivo '$ARCHIVO' no existe."
+          fi
