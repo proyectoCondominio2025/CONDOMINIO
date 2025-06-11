@@ -19,7 +19,7 @@ jobs:
           node-version: '18'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Build del proyecto
         run: npm run build
@@ -36,7 +36,7 @@ jobs:
           node-version: '18'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Lint del proyecto
         run: npm run lint
@@ -53,7 +53,7 @@ jobs:
           node-version: '18'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
       - name: Auditoría de seguridad
         run: npm audit --audit-level=high --production
