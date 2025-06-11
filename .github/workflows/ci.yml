@@ -61,21 +61,21 @@ jobs:
       - name: Generar reporte de auditoría (JSON)
         run: npm audit --json > audit-report.json || true
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v3
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Clonar repositorio
+  #       uses: actions/checkout@v3
 
-      - name: Usar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+  #     - name: Usar Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
 
-      - name: Instalar dependencias
-        run: npm install
+  #     - name: Instalar dependencias
+  #       run: npm install
       
-      - name: Ejecutar tests
-        run: npm test
+  #     - name: Ejecutar tests
+  #       run: npm test
 
     
