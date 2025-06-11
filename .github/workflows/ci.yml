@@ -17,6 +17,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+      
+      - name: Eliminar lock y node_modules
+        run: |
+          rm -rf package-lock.json node_modules
 
       - name: Instalar dependencias
         run: npm install
@@ -35,6 +39,10 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Eliminar lock y node_modules
+        run: |
+          rm -rf package-lock.json node_modules
+
       - name: Instalar dependencias
         run: npm install
 
@@ -51,6 +59,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+
+      - name: Eliminar lock y node_modules
+        run: |
+          rm -rf package-lock.json node_modules
 
       - name: Instalar dependencias
         run: npm install
