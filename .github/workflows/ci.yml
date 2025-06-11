@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v3
@@ -17,16 +16,16 @@ jobs:
       - name: Usar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' 
+          node-version: '18'
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
 
       - name: Build del proyecto
         run: npm run build
+
   linter:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v3
@@ -34,13 +33,27 @@ jobs:
       - name: Usar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' 
+          node-version: '18'
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
 
-      - name: Build del proyecto
-        run: npm run build
-      - name: linter
+      - name: Lint del proyecto
         run: npm run lint
 
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Auditoría de seguridad
+        run: npm audit --audit-level=high --production
