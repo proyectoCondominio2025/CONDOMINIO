@@ -60,7 +60,7 @@ jobs:
       
       - name: Generar reporte de auditoría (JSON)
         run: npm audit --json > audit-report.json || true
-        
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -74,20 +74,8 @@ jobs:
 
       - name: Instalar dependencias
         run: npm install
-
-      - name: Crear archivo .env para testing
-        run: |
-          echo "VITE_API_URL=http://127.0.0.1:8000/api" > .env
-
+      
       - name: Ejecutar tests
         run: npm test
 
-      - name: Generar reporte de cobertura (si usas Vitest o Jest)
-        run: |
-          npm run test -- --coverage || true
-
-      - name: Subir reporte de cobertura como artefacto
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: coverage/
+    
