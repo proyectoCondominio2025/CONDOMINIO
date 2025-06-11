@@ -76,9 +76,8 @@ jobs:
       - name: Mostrar últimos 5 commits
         run: git log -n 5 --pretty=format:"%h - %an: %s"
     
-    mostrar-archivo:
+  mostrar_archivo:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v3
