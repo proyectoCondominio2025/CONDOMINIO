@@ -57,3 +57,6 @@ jobs:
 
       - name: Auditoría de seguridad
         run: npm audit --audit-level=high --production
+      
+      - name: Generar reporte de auditoría (JSON)
+        run: npm audit --json > audit-report.json
