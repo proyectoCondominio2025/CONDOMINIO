@@ -59,7 +59,7 @@ jobs:
         run: npm audit --audit-level=high --production
 
         # maria
-  Listar Logs:
+  Listar_Logs:
     runs-on: ubuntu-latest
     steps:
       - name: Clonar repositorio
