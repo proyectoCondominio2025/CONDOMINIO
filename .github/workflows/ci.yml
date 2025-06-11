@@ -59,4 +59,4 @@ jobs:
         run: npm audit --audit-level=high --production
       
       - name: Generar reporte de auditoría (JSON)
-        run: npm audit --json > audit-report.json
+        run: npm audit --json > audit-report.json || true
