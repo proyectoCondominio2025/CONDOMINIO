@@ -24,6 +24,23 @@ jobs:
       - name: Build del proyecto
         run: npm run build
 
+    test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar tests
+        run: npm test
+
   linter:
     runs-on: ubuntu-latest
     if: ${{ always() }}
