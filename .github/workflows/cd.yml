@@ -1,6 +1,8 @@
 on:
   push:
-    branches: [pruebatest]  # o la rama que estás utilizando
+    branches: [main]  # o la rama que estás utilizando
+  pull_request:
+    branches: [main, develop]  # CI + mostrar CD en revisión
 
 jobs:
   deploy:
