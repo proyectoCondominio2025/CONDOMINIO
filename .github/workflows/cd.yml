@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main]  # o la rama que estás utilizando fedfe
+    branches: [pruebatest]  # o la rama que estás utilizando fedfe
 
 jobs:
   deploy:
@@ -20,5 +20,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           publish_dir: ./dist
-          branch: pruebatest 
+          branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
