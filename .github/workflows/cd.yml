@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [pruebatest]  # o la rama que estás utilizando
+    branches: [pruebatest]  # o la rama que estás utilizando fedfe
 
 jobs:
   deploy:
