@@ -1,37 +1,24 @@
-name: Deploy to GitHub Pages
-
 on:
   push:
-    branches: [pruebatest]
+    branches: [pruebatest]  # o la rama que estás utilizando
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the project
-        run: npm run build
-
-    
-    
-      - name: Configure Git user
-        run: |
-          git config --global user.name "YasHuincahual"
-          git config --global user.email "ya.huincahual@duocuc.cl"
+      - run: npm install
+      - run: npm run build
 
       - name: Deploy to GitHub Pages
-        run: npm run deploy
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# clcl
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./dist
+          branch: pruebatest
+          github_token: ${{ secrets.GITHUB_TOKEN }}
