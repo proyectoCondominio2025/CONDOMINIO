@@ -6,10 +6,11 @@ on:
   pull_request:
     branches: [main, develop]
 
+    # Yasna
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v3
@@ -17,16 +18,35 @@ jobs:
       - name: Usar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' 
+          node-version: '18'
 
       - name: Instalar dependencias
         run: npm install
 
       - name: Build del proyecto
         run: npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar tests
+        run: npm test
+
   linter:
     runs-on: ubuntu-latest
-
+    if: ${{ always() }}
+    needs: [build]
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v3
@@ -34,13 +54,68 @@ jobs:
       - name: Usar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' 
+          node-version: '18'
 
       - name: Instalar dependencias
         run: npm install
 
-      - name: Build del proyecto
-        run: npm run build
-      - name: linter
+      - name: Lint del proyecto
         run: npm run lint
 
+  security:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [build]
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Auditoría de seguridad
+        run: npm audit --audit-level=high --production
+
+        # maria
+  Listar_Logs:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [security]
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Usar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Mostrar últimos 5 commits
+        run: git log -n 5 --pretty=format:"%h - %an: %s"
+    
+  Mostrar_Archivo:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs: [security]
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Verificar y mostrar contenido de archivo
+        run: |
+          ARCHIVO="README.md"
+
+          if [ -f "$ARCHIVO" ]; then
+            echo "✅ El archivo '$ARCHIVO' existe. Mostrando contenido:"
+            cat "$ARCHIVO"
+          else
+            echo "⚠ El archivo '$ARCHIVO' no existe."
+          fi
