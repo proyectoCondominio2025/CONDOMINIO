@@ -3,6 +3,9 @@ on:
     branches: [pruebatest]  # o la rama que estás utilizando
   # pull_request:
   #   branches: [main]
+
+permissions:
+  content: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
