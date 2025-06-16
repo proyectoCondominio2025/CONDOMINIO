@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import api from '../../api/axios';
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { jwtDecode } from "jwt-decode";
 
 function LoginPage() {
   const [loading, setLoading] = useState(false); // Estado para el loading
@@ -40,9 +41,10 @@ function LoginPage() {
         localStorage.setItem('accessToken', response.data.access);
         localStorage.setItem('refreshToken', response.data.refresh);
 
-        // 🚩 Aquí va el tipo:
-        const tipo = response.data.tipo_de_usuario; // <-- debe venir del backend
+        const decoded = jwtDecode(response.data.access);
+        const tipoUsuario = decoded.tipo_de_usuario;
 
+        console.log("tipode usuario", tipoUsuario)
         setLoading(false);
 
         Swal.fire({
@@ -52,11 +54,11 @@ function LoginPage() {
           timer: 2000,
           showConfirmButton: false,
         }).then(() => {
-          if (tipo === "residente") {
-            navigate("/home-residente");
-          } else if (tipo === "portero") {
-            navigate("/home-portero");
-          } else if (tipo === "admin") {
+          if (tipoUsuario === "residente") {
+            navigate("/residente");
+          } else if (tipoUsuario === "portero") {
+            navigate("/portero/lista-visita");
+          } else if (tipoUsuario === "admin") {
             navigate("/admin");
           } else {
             navigate("/");

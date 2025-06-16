@@ -6,7 +6,6 @@ import LoginPage from '../Pages/autenticacion/LoginPage';
 import ForgotPassaword from '../Pages/autenticacion/ForgotPassword';
 import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
-import ListaVisita from '../Pages/UserPortero/ListaVisitaPage';
 import CrearUsuarios from '../Pages/UserAdministrador/crearUsuario/CrearUsuarios';
 import ListaUsuarios from '../Pages/UserAdministrador/listaUsuarios';
 import PagosUsuarios from '../Pages/UserAdministrador/PagosUsuarios';
@@ -31,6 +30,8 @@ import LayoutAdmin from '../Pages/layout/LayoutAdmin';
 import LayoutResidente from '../Pages/layout/LayoutResidente';
 import HomeResidente from '../Pages/UserResidente/HomeResidente';
 import PerfilResidente from '../Pages/UserResidente/PerfilResidente';
+import ProtectedRoute from '../Pages/components/PrivateRoute';
+import ListaVisita from '../Pages/UserPortero/ListaVisitaPage'
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -59,12 +60,15 @@ export const RoutesComponent = createBrowserRouter([
 
   {
     path: '/admin',
-    element: <LayoutAdmin/>,
+    element: (
+      <ProtectedRoute allowedRoles={"admin"}>
+        <LayoutAdmin />
+      </ProtectedRoute>),
     children: [
       {
         path: '/admin',
-        element: <HomeAdmin/>,
-        index:true
+        element: <HomeAdmin />,
+        index: true
       },
       {
         path: '/admin/crear-usuarios',
@@ -81,11 +85,11 @@ export const RoutesComponent = createBrowserRouter([
       {
         path: '/admin/crear-noticias',
         element: <CrearNoticias />,
-      }, 
+      },
       {
         path: '/admin/listar-pagos',
         element: <ListarPagos />,
-      },  
+      },
       {
         path: '/admin/perfil',
         element: <MiPerfil />,
@@ -99,7 +103,10 @@ export const RoutesComponent = createBrowserRouter([
 
   {
     path: '/residente',
-    element: <LayoutResidente/>,
+    element:
+      (<ProtectedRoute allowedRoles={"residente"}>
+        <LayoutResidente />
+      </ProtectedRoute>),
     children: [
       {
         path: '/residente',
@@ -114,44 +121,52 @@ export const RoutesComponent = createBrowserRouter([
         element: <PerfilResidente />,
       },
     ]
-      
+
   },
-  
+
+  // {
+  //   path: '/pago',
+  //   element: < PagoPage />,
+  //   children: [
+  //     {
+  //       path: '/pago/success',
+  //       element: < PagoExitoPage />,
+  //     },
+  //     {
+  //       path: '/pago/failure',
+  //       element: < PagoFallidoPage />,
+  //     },
+  //     {
+  //       path: '/pago/pending',
+  //       element: < PagoPendientePage />,
+  //     },
+  //   ]
+  // },
+
   {
-    path: '/pago',
-    element: < PagoPage />,
+    path: '/portero',
+    // element:<ProtectedRoute allowedRoles={"portero"}/>,
     children: [
       {
-        path: '/pago/success',
-        element: < PagoExitoPage />,
+        path: '/portero/ingreso-visita',
+        element: <IngresoVisita />,
       },
       {
-        path: '/pago/failure',
-        element: < PagoFallidoPage />,
+        path: '/portero/lista-vehiculo',
+        element: <ListaVehiculo />,
       },
       {
-        path: '/pago/pending',
-        element: < PagoPendientePage />,
+        path: '/portero/lista-visita',
+        element: <ListaVisita></ListaVisita>,
+      },
+
+      {
+        path: '/portero/perfil',
+        element: <MiPerfil />,
       },
     ]
   },
-  {
-    path: '/ingreso-visita',
-    element: <IngresoVisita />,
-  },
-  {
-    path: '/lista-vehiculo',
-    element: <ListaVehiculo />,
-  },
-  {
-    path: '/lista-visita',
-    element: <ListaVisita />,
-  },
 
-  {
-    path: '/perfil',
-    element: <MiPerfil />,
-  },
 
 ]);
 

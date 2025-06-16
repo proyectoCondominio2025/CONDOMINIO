@@ -1,8 +1,9 @@
 import React from 'react';
-import { Navbar, Nav, Container, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown, DropdownButton, NavDropdown  } from 'react-bootstrap';
 import { Outlet, Link } from 'react-router-dom';
 import IngresoSmart from '../../Logo/IngresoSmart.jpeg';
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
@@ -12,6 +13,23 @@ const AdminNavbar = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigate("/");
+  }
+
+    const token = localStorage.getItem("accessToken");
+    let nombre = null
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        nombre = decoded.nombre;
+  
+      } catch (e) {
+        console.error("Token inválido:", e);
+        localStorage.removeItem("accessToken"); // Limpia si está corrupto
+      }
+    }
+
+    function capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   return (
@@ -39,6 +57,8 @@ const AdminNavbar = () => {
             <Nav className="ms-auto">
 
               <DropdownButton variant='outline-light' id="dropdown-basic-button" drop={'start'} title={<i class="bi bi-gear text-dark fs-5"></i>}>
+                <Dropdown.ItemText >{capitalizarPrimeraLetra(nombre)}</Dropdown.ItemText>
+                <NavDropdown.Divider />
                 <Dropdown.Item href="/admin/perfil">Mi perfil</Dropdown.Item>
                 <Dropdown.Item onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>
               </DropdownButton>

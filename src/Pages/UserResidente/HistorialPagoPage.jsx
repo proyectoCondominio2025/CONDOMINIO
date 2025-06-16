@@ -1,31 +1,82 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
-
-const pagosOriginales = [
-  { id: 1, fecha: '2025-05-01', folio: 'F001', descripcion: 'Pago mensual mayo', monto: '$20.000', estado: 'Pagado' },
-  { id: 2, fecha: '2025-04-01', folio: 'F002', descripcion: 'Pago mensual abril', monto: '$20.000', estado: 'Deuda' },
-  { id: 3, fecha: '2025-03-01', folio: 'F003', descripcion: 'Pago mensual marzo', monto: '$20.000', estado: 'Pagado' },
-  { id: 4, fecha: '2025-01-03', folio: 'F004', descripcion: 'Pago mensual enero', monto: '$20.000', estado: 'Pagado' },
-  { id: 5, fecha: '2025-02-03', folio: 'F005', descripcion: 'Pago mensual febrero', monto: '$20.000', estado: 'Pagado' },
-];
+import React, { useEffect, useState } from 'react';
+import api from '../../api/axios';
+import Swal from 'sweetalert2';
+import { jwtDecode } from "jwt-decode";
 
 const HistorialPagos = () => {
   const [filtroFecha, setFiltroFecha] = useState('');
   const [filtroEstado, setFiltroEstado] = useState('Todos');
-  const navigate = useNavigate();
+  const [pagos, setPagos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [botonCargandoId, setBotonCargandoId] = useState(null);
+
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    const obtenerPagos = async () => {
+      try {
+        const response = await api.get('/pagos/mis-pagos/');
+        setPagos(response.data);
+      } catch (err) {
+        console.error(err);
+        setError('No se pudieron cargar los pagos.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    obtenerPagos();
+  }, []);
+
+  function capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
 
-  const pagosFiltrados = pagosOriginales.filter((p) => {
-    const coincideFecha = filtroFecha ? p.fecha.startsWith(filtroFecha) : true;
-    const coincideEstado = filtroEstado === 'Todos' ? true : p.estado === filtroEstado;
-    return coincideFecha && coincideEstado;
-  });
+  if (loading) return <div className="d-flex justify-content-center">
+    <div className="spinner-border text-success" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+  </div>;
+  if (error) return <p className="text-danger">{error}</p>;
 
-  const irAPagar = (folio) => {
-    navigate(`/detalle/${folio}`);
+
+  const pagarPago = async (pago) => {
+    setBotonCargandoId(pago.id);
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        throw new Error("Token no encontrado");
+      }
+
+      const decoded = jwtDecode(token);
+      const residente_id = decoded.user_id
+
+      const data = {
+        residente_id: residente_id,
+        periodo: pago.periodo,
+        monto: parseInt(pago.monto),
+        descripcion: pago.descripcion,
+        items: [
+          {
+            title: pago.descripcion,
+            quantity: 1,
+            unit_price: parseInt(pago.monto)
+          }
+        ]
+      };
+
+      const response = await api.post(`/pagos/crear/`, data);
+      const url = response.data.init_point;
+      window.open(url, '_blank');
+    } catch (error) {
+      console.error(error);
+      Swal.fire('Error', 'No se pudo iniciar el pago.', 'error');
+    } finally {
+      setBotonCargandoId(null);
+    }
   };
-  
 
   return (
     <div className="container mt-5">
@@ -48,46 +99,107 @@ const HistorialPagos = () => {
           >
             <option value="Todos">Todos</option>
             <option value="Pagado">Pagado</option>
-            <option value="Deuda">Deuda</option>
+            <option value="Pendiente">Pendiente</option>
           </select>
         </div>
       </div>
 
-      <table className="table table-hover text-center">
-        <thead className="table-dark">
-          <tr>
-            <th>FECHA</th>
-            <th>FOLIO</th>
-            <th>DESCRIPCIÓN</th>
-            <th>MONTO</th>
-            <th>ESTADO</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pagosFiltrados.map((pago) => (
-            <tr key={pago.id}>
-              <td>{pago.fecha}</td>
-              <td>{pago.folio}</td>
-              <td>{pago.descripcion}</td>
-              <td>{pago.monto}</td>
-              <td>
-                {pago.estado.toLowerCase() === 'pagado' ? (
-                  <span className="text-success fw-bold" >{pago.estado.toUpperCase()}</span>
-                ) : (
-                  <button className="btn btn-fill text-danger fw-bold"  onClick={() => irAPagar(pago.folio)}>
-                    DEUDA
-                  </button>
-                )}
-              </td>
+      <div className="bg-white rounded-2xl shadow-lg overflow-x-auto">
+        <table className="w-full text-base">
+          <thead>
+            <tr className="bg-indigo-100 text-black">
+              <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">ID</th>
+              <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Descripción</th>
+              <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Periodo</th>
+              <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">ID de pago</th>
+              <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Monto</th>
+              <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Estado</th>
+              <th className="px-4 py-3 text-center text-xs font-extrabold font-[Inter] uppercase tracking-wider">Acción</th>
             </tr>
-          ))}
-          {pagosFiltrados.length === 0 && (
-            <tr>
-              <td colSpan="5" className="text-muted">No hay pagos que coincidan con los filtros.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {pagos
+              .filter((pago) => {
+                // Filtro por mes
+                const coincideFecha = filtroFecha
+                  ? pago.periodo.startsWith(filtroFecha)
+                  : true;
+
+                // Filtro por estado
+                const coincideEstado =
+                  filtroEstado === "Todos"
+                    ? true
+                    : filtroEstado === "Pagado"
+                      ? pago.estado === "aprobado"
+                      : pago.estado === "pendiente";
+
+                return coincideFecha && coincideEstado;
+              })
+              .map((pago) => (
+                <tr key={pago.id} className="border-b last:border-b-0 hover:bg-indigo-50 transition">
+                  <td className="px-4 py-3">{pago.id}</td>
+                  <td className="px-4 py-3">{pago.descripcion}</td>
+                  <td className="px-4 py-3">
+                    {(() => {
+                      const [a, m, d] = pago.periodo.split("-");
+                      return `${d}-${m}-${a}`;
+                    })()}
+                  </td>
+                  <td className="px-4 py-3">
+                    {pago.estado === 'aprobado' && pago.mp_payment_id
+                      ? pago.mp_payment_id
+                      : "N/A"}
+                  </td>
+                  <td className="px-4 py-3">
+                    {new Intl.NumberFormat("es-CL", {
+                      style: "currency",
+                      currency: "CLP",
+                      minimumFractionDigits: 0
+                    }).format(pago.monto)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={
+                        pago.estado === "aprobado"
+                          ? "inline-block px-4 py-1 text-sm rounded-full bg-emerald-100 text-emerald-700 font-bold shadow-md border border-emerald-200 ring-1 ring-emerald-100/50 transition-all duration-150"
+                          : "inline-block px-4 py-1 text-sm rounded-full bg-rose-100 text-rose-700 font-bold shadow-md border border-rose-200 ring-1 ring-rose-100/50 transition-all duration-150"
+                      }
+                      style={{ letterSpacing: "0.05em" }}
+                    >
+                      {pago.estado == "aprobado" ? "Pagado" : capitalizarPrimeraLetra(pago.estado)}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    {pago.estado === 'pendiente' ? (
+                      <button
+                        onClick={() => pagarPago(pago)}
+                        className="px-4 py-1 bg-emerald-600 text-white rounded-xl font-semibold shadow hover:bg-emerald-700 transition d-flex align-items-center justify-center"
+                        disabled={botonCargandoId === pago.id}
+                      >
+                        {botonCargandoId === pago.id ? (
+                          <div className="spinner-border spinner-border-sm text-light" role="status">
+                            <span className="visually-hidden">Cargando...</span>
+                          </div>
+                        ) : (
+                          'Pagar'
+                        )}
+                      </button>
+                    ) : (
+                      <span className="text-gray-400 text-sm italic">Pagado</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            {pagos.length === 0 && (
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-gray-400 text-lg">
+                  No hay pagos registrados.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

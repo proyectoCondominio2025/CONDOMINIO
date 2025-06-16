@@ -150,7 +150,7 @@ function ListaUsuarios() {
       />
       {/* Fondo celeste igual que Lista de Noticias */}
       <div className="min-h-screen w-full" style={{ background: "#a6ecec" }}>
-        <div className="max-w-6xl mx-auto px-4 pt-10">
+        <div className="w-full max-w-[1400px] mx-auto px-4">
           <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-8">
             Lista de Usuarios
           </h2>
@@ -175,7 +175,7 @@ function ListaUsuarios() {
           </div>
           {/* Tabla */}
           <div className="bg-white rounded-2xl shadow-lg overflow-x-auto">
-            <table className="min-w-full text-base">
+            <table className="w-full text-base">
               <thead>
                 <tr className="bg-indigo-100 text-black">
                   <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">ID</th>
