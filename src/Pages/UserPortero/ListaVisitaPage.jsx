@@ -1,92 +1,129 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Container, Row, Col } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa'; // ícono de plus
+import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import api from '../../api/axios'; // cuando implemente API, descomenta
 
 function ListaVisita() {
-  const [autos, setAutos] = useState([
-    { id: 1, nombre: 'perez', Rut: '26493126-6', casa: '101', tieneAuto:'si' , patente:'45678', estado: 'Adentro' },
-    { id: 2, nombre: 'Maria perez', Rut: '26493126-6', casa: '102', tieneAuto:'si' , patente:'45678', estado: 'Salió' },
-    { id: 3, nombre: 'jose perez', Rut: '26493126-6', casa: '103', tieneAuto:'si' , patente:'45678', estado: 'Adentro' },
-    { id: 4, nombre: 'nio perez', Rut: '26493126-6', casa: '103', tieneAuto:'no' , patente:'45678', estado: 'Adentro' }
-  ]);
+    const [visitas, setVisitas] = useState([]);
 
-  const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-  const eliminarVisita = (id) => {
-    const nuevosAutos = autos.filter(auto => auto.id !== id);
-    setAutos(nuevosAutos);
-  };
+    const navigate = useNavigate();
 
-  const editarVisita = (auto) => {
-    console.log('Editar visita:', auto);
-    // Aquí puedes redirigir a otra página con react-router o abrir un modal
-  };
+    // Esto quedará así cuando implemente API:
+    useEffect(() => {
+        setLoading(true);
+        api.get('/visitas/')
+            .then((response) => {
+                setVisitas(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+                setError('No se pudieron cargar las visitas');
+            })
+            .finally(() => setLoading(false));
+    }, []);
 
-  const agregarVisita = () => {
-    
-    navigate('/ingreso-visita');
-    console.log('Agregar nueva visita');
-    // Aquí podrías abrir un modal o redirigir a otra página
-  };
+    const eliminarVisita = async (id) => {
+        try {
+            await api.delete(`/visitas/${id}/`);
+            setVisitas((prev) => prev.filter((visita) => visita.id !== id));
+        } catch (err) {
+            console.error('Error eliminando visita:', err);
+        }
+    };
 
-  return (
-    <Container className="mt-5">
+    const editarVisita = (visita) => {
+        setVisitaSeleccionada(visita);
+        setShowModal(true);
+    };
 
-      <h2>Lista de Visitas</h2>
-      <Row className="mb-3">
-        <Col>
-          <Button
-            variant="primary"
-            onClick={agregarVisita}
-            className="d-flex align-items-center gap-2 shadow-sm rounded px-3 py-2">
-            <FaPlus />
-            Agregar Visita
-          </Button>
-        </Col>
-      </Row>
+    const agregarVisita = () => {
+        navigate('/portero/ingreso-visita'); // redirigir a ingreso
+    };
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Rut</th>
-            <th>N° Casa</th>
-            <th>Tiene Auto</th>
-            <th>Patente</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {autos.map(auto => (
-            <tr key={auto.id}>
-              <td>{auto.id}</td>
-              <td>{auto.nombre}</td>
-              <td>{auto.Rut}</td>
-              <td>{auto.casa}</td>
-              <td>{auto.tieneAuto}</td>
-              <td>{auto.patente}</td>
-              <td>{auto.estado}</td>
-              <td>
-                <Button
-                  variant="success"
-                  className="me-2"
-                  onClick={() => editarVisita(auto)}>
-                  Editar
-                </Button>
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center mt-5">
+                <div className="spinner-border text-success" role="status">
+                    <span className="visually-hidden">Cargando...</span>
+                </div>
+            </div>
+        );
+    }
 
-                <Button variant="danger" onClick={() => eliminarVisita(auto.id)}>
-                  Eliminar
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </Container>
-  );
+    if (error) {
+        return <p className="text-danger text-center mt-4">{error}</p>;
+    }
+
+    return (
+        <Container className="mt-5">
+            <h2>Lista de Visitas</h2>
+            <Row className="mb-3">
+                <Col>
+                    <Button
+                        variant="primary"
+                        onClick={agregarVisita}
+                        className="d-flex align-items-center gap-2 shadow-sm rounded px-3 py-2">
+                        <FaPlus />
+                        Agregar Visita
+                    </Button>
+                </Col>
+            </Row>
+
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Rut</th>
+                        <th>N° Casa</th>
+                        <th>Tiene Auto</th>
+                        <th>Patente</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {visitas.length > 0 ? (
+                        visitas.map((visita) => (
+                            <tr key={visita.id}>
+                                <td>{visita.id}</td>
+                                <td>{visita.nombre}</td>
+                                <td>{visita.rut}</td>
+                                <td>{visita.casa}</td>
+                                <td>{visita.tieneAuto ? 'Sí' : 'No'}</td>
+                                <td>{visita.patente}</td>
+                                <td>{visita.estado}</td>
+                                <td>
+                                    <Button
+                                        variant="success"
+                                        className="me-2"
+                                        onClick={() => editarVisita(visita)}>
+                                        Editar
+                                    </Button>
+
+                                    <Button variant="danger" onClick={() => eliminarVisita(visita.id)}>
+                                        Eliminar
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="8" className="text-center text-muted">
+                                No se encontró ninguna visita.
+                            </td>
+                        </tr>
+                    )}
+
+                </tbody>
+            </Table>
+        </Container>
+    );
 }
 
 export default ListaVisita;

@@ -1,14 +1,32 @@
 import React from 'react';
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 
 function PerfilUsuario() {
-  // Simulación de datos del usuario
-  const usuario = {
-    nombre: 'María González',
-    correo: 'maria.gonzalez@email.com',
-    casa: '123',
-  };
+  
+  const token = localStorage.getItem("accessToken");
+  let nombre = null
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      nombre = decoded.nombre;
+      apellido= decoded.apellido;
+      correo= decoded.correo;
+      
+
+
+    } catch (e) {
+      console.error("Token inválido:", e);
+      localStorage.removeItem("accessToken"); // Limpia si está corrupto
+    }
+  }
+
+
 
   return (
     <Container className="mt-5">
@@ -17,18 +35,18 @@ function PerfilUsuario() {
         <Row>
           <Col md={6}>
             <strong>Nombre:</strong>
-            <p>{usuario.nombre}</p>
+            <p>{nombre}+{apellido}</p>
           </Col>
           <Col md={6}>
             <strong>Correo:</strong>
-            <p>{usuario.correo}</p>
+            <p>{correo}</p>
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
+          {/* <Col md={6}>
             <strong>Número de Casa:</strong>
-            <p>{usuario.casa}</p>
-          </Col>
+            <p>{numero_casacasa}</p>
+          </Col> */}
         </Row>
         <div className="text-center mt-4">
           <Button variant="primary">Editar Perfil</Button>

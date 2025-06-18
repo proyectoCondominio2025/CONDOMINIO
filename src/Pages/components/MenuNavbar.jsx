@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import IngresoSmart from '../../assets/IngresoSmart.png';
+import IngresoSmart from '../../Logo/IngresoSmart.jpeg';
 import { jwtDecode } from 'jwt-decode';
 
 

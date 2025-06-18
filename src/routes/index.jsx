@@ -4,8 +4,6 @@ import HomePage from '../Pages/HomePage';
 import ContactoPage from '../Pages/ContactoPage';
 import LoginPage from '../Pages/autenticacion/LoginPage';
 import ForgotPassaword from '../Pages/autenticacion/ForgotPassword';
-import IngresoVisita from '../Pages/UserPortero/IngresoVisitaPage';
-import ListaVehiculo from '../Pages/UserPortero/ListaVehiculoPage';
 import CrearUsuarios from '../Pages/UserAdministrador/crearUsuario/CrearUsuarios';
 import ListaUsuarios from '../Pages/UserAdministrador/listaUsuarios';
 import PagosUsuarios from '../Pages/UserAdministrador/PagosUsuarios';
@@ -18,7 +16,6 @@ import PaymentHistoryPage from '../Pages/UserResidente/PaymentHistoryPage';
 import { UserProfilePage } from '../Pages/UserProfilePage';
 import MiPerfil from '../Pages/MiPerfilPage';
 import MenuNavbar from '../Pages/components/MenuNavbar';
-import MenuNavbarPortero from '../Pages/components/MenuNavbarPortero';
 import { Footer } from '../Pages/components/footer';
 import HistorialPagos from '../Pages/UserResidente/HistorialPagoPage';
 import DetallePago from '../Pages/UserResidente/DetallePago';
@@ -31,7 +28,12 @@ import LayoutResidente from '../Pages/layout/LayoutResidente';
 import HomeResidente from '../Pages/UserResidente/HomeResidente';
 import PerfilResidente from '../Pages/UserResidente/PerfilResidente';
 import ProtectedRoute from '../Pages/components/PrivateRoute';
-import ListaVisita from '../Pages/UserPortero/ListaVisitaPage'
+import LayoutPortero from '../Pages/layout/LayoutPortero';
+import IngresoVisitaPage from '../Pages/UserPortero/IngresoVisitaPage';
+import ListaVehiculoPage from '../Pages/UserPortero/ListaVehiculoPage';
+import ListaVisitaPage from '../Pages/UserPortero/ListaVisitaPage'
+import ListarFormulario from '../Pages/UserAdministrador/ListaFormulario';
+
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -98,6 +100,10 @@ export const RoutesComponent = createBrowserRouter([
         path: '/admin/usuario-pagos/:id',
         element: <PagosUsuarios />,
       },
+      {
+        path: '/admin/listar-formularios',
+        element: <ListarFormulario />,
+      },
     ]
   },
 
@@ -145,25 +151,28 @@ export const RoutesComponent = createBrowserRouter([
 
   {
     path: '/portero',
-    // element:<ProtectedRoute allowedRoles={"portero"}/>,
+    element:
+    (<ProtectedRoute allowedRoles={"portero"}>
+      <LayoutPortero/>
+      </ProtectedRoute> ),
     children: [
       {
         path: '/portero/ingreso-visita',
-        element: <IngresoVisita />,
+        element: <IngresoVisitaPage />,
       },
       {
         path: '/portero/lista-vehiculo',
-        element: <ListaVehiculo />,
+        element: <ListaVehiculoPage />,
       },
       {
         path: '/portero/lista-visita',
-        element: <ListaVisita></ListaVisita>,
+        element: <ListaVisitaPage/>,
       },
 
-      {
-        path: '/portero/perfil',
-        element: <MiPerfil />,
-      },
+      // {
+      //   path: '/portero/perfil',
+      //   element: <MiPerfil />,
+      // },
     ]
   },
 

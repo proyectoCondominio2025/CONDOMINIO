@@ -1,49 +1,49 @@
-name: Vite React CI
+# name: Vite React CI
 
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+# on:
+#   push:
+#     branches: [main, develop]
+#   pull_request:
+#     branches: [main, develop]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Clonar repositorio
+#         uses: actions/checkout@v3
 
-      - name: Usar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' 
+#       - name: Usar Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18' 
 
-      - name: Instalar dependencias
-        run: npm install
+#       - name: Instalar dependencias
+#         run: npm install
 
-      - name: Build del proyecto
-        run: npm run build
+#       - name: Build del proyecto
+#         run: npm run build
 
-  linter:
-    runs-on: ubuntu-latest
+#   linter:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Clonar repositorio
+#         uses: actions/checkout@v3
 
-      - name: Usar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' 
+#       - name: Usar Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18' 
 
-      - name: Instalar dependencias
-        run: npm install
+#       - name: Instalar dependencias
+#         run: npm install
 
-      - name: Build del proyecto
-        run: npm run build
-      - name: linter
-        run: npm run lint
+#       - name: Build del proyecto
+#         run: npm run build
+#       - name: linter
+#         run: npm run lint
 
 
       

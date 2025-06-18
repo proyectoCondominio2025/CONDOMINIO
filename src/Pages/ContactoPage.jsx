@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import Swal from 'sweetalert2';
+import publicApi  from '../api/publicApi'; // Importamos la API pública
 
 // Definimos las validaciones con Yup
 const validationSchema = Yup.object({
   nombre: Yup.string().required('El nombre es obligatorio'),
-  correo: Yup.string()
+  correo_electronico: Yup.string()
     .email('Correo inválido')
     .required('El correo electrónico es obligatorio'),
   mensaje: Yup.string().required('El mensaje es obligatorio'),
@@ -20,25 +22,33 @@ function ContactoPage() {
   const formik = useFormik({
     initialValues: {
       nombre: '',
-      correo: '',
+      correo_electronico: '',
       mensaje: '',
     },
     validationSchema,
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        // Simula un envío (reemplazar con una llamada a la API real)
-        setTimeout(() => {
-          setEnviado(true);
-          setLoading(false);
-          
-          console.log('Formulario enviado:', values);
-        }, 2000); // Simula un retraso de 2 segundos
+        const response = await publicApi.post('formulario-contacto/', values);
+
+        setEnviado(true);
+        Swal.fire({
+          icon: 'success',
+          title: '¡Formulario enviado!',
+          text: 'Gracias por contactarnos. Te responderemos pronto.',
+        });
       } catch (error) {
-        setLoading(false);
         console.error('Error al enviar el formulario:', error);
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al enviar el formulario. Inténtalo nuevamente.',
+        });
+      } finally {
+        setLoading(false);
       }
-    },
+    }
   });
 
   return (
@@ -76,14 +86,14 @@ function ContactoPage() {
           <Form.Control
             type="email"
             placeholder="Ingresa tu correo"
-            name="correo"
-            value={formik.values.correo}
+            name="correo_electronico"
+            value={formik.values.correo_electronico}
             onChange={formik.handleChange}
-            isInvalid={formik.touched.correo && !!formik.errors.correo}
+            isInvalid={formik.touched.correo_electronico && !!formik.errors.correo_electronico}
             className="custom-input"
           />
           <Form.Control.Feedback type="invalid">
-            {formik.errors.correo}
+            {formik.errors.correo_electronico}
           </Form.Control.Feedback>
         </Form.Group>
 
