@@ -37,6 +37,10 @@ const MenuNavbar = () => {
     }
   };
 
+    function capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
     <>
       <Navbar expand="lg" className="custom-navbar">
@@ -69,7 +73,7 @@ const MenuNavbar = () => {
                   title={
                     <div className="d-flex align-items-center">
                       <i className="bi bi-gear text-dark fs-5" style={{ fontSize: '1.8rem', marginRight: '0.5rem' }}></i>
-                      <span style={{ fontSize: '0.85rem' }}>{usuario.nombre}</span>
+                      <span style={{ fontSize: '0.85rem' }}>{capitalizarPrimeraLetra(usuario.nombre)}</span>
                     </div>
                   }
                   id="usuario-dropdown"

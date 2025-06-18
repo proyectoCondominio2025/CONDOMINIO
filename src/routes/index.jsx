@@ -33,7 +33,7 @@ import IngresoVisitaPage from '../Pages/UserPortero/IngresoVisitaPage';
 import ListaVehiculoPage from '../Pages/UserPortero/ListaVehiculoPage';
 import ListaVisitaPage from '../Pages/UserPortero/ListaVisitaPage'
 import ListarFormulario from '../Pages/UserAdministrador/ListaFormulario';
-
+import RestablecerContrasenaPage from '../Pages/autenticacion/ResetPassword';
 
 export const RoutesComponent = createBrowserRouter([
   {
@@ -56,7 +56,10 @@ export const RoutesComponent = createBrowserRouter([
         path: '/forgot-password',
         element: <ForgotPassaword />,
       },
-
+      {
+        path : '/restablecer-contraseña',
+        element: <RestablecerContrasenaPage/>
+      }
     ]
   },
 

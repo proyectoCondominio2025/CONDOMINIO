@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Alert, Row, Col, Spinner } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import publicApi from '../../api/publicApi'
+import Swal from 'sweetalert2';
 
 function RecuperarContrasenaPage() {
-  const [enviado, setEnviado] = useState(false); // Estado para el mensaje de éxito
   const [loading, setLoading] = useState(false); // Estado para controlar el loading
 
   const formik = useFormik({
@@ -17,19 +18,42 @@ function RecuperarContrasenaPage() {
         .required('El correo es obligatorio'),
     }),
     onSubmit: async (values) => {
-      setLoading(true); // Activar el loading
+      setLoading(true);
       try {
-        // Simula el envío (reemplazar con una API real)
-        setTimeout(() => {
-          setEnviado(true); // Mostrar el mensaje de éxito
-          setLoading(false); // Desactivar el loading
-          console.log('Correo enviado a:', values.email);
-        }, 2000); // Simula un retraso de 2 segundos
-      } catch (error) {
-        setLoading(false); // Desactivar el loading
-        console.error('Error al enviar el correo:', error);
+        // eslint-disable-next-line no-unused-vars
+        const response = await publicApi.post('/auth/password/reset/', {
+          email: values.email
+        });
+
+        Swal.fire({
+          icon: 'success',
+          title: '¡Correo enviado!',
+          text: 'Revisa tu bandeja de entrada para restablecer tu contraseña.',
+          confirmButtonColor: '#3085d6'
+        });
+
+        formik.resetForm();
+      } catch (err) {
+        let errorMsg = 'No se pudo enviar el correo.';
+
+        if (err.response?.data?.email?.length > 0) {
+          errorMsg = err.response.data.email[0]; // Muestra el mensaje del campo 'email'
+        } else if (err.response?.data?.detail) {
+          errorMsg = err.response.data.detail;
+        }
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMsg,
+          confirmButtonColor: '#d33'
+        });
+
+        formik.setStatus(errorMsg);
+      }finally{
+        setLoading(false);
       }
-    },
+    }
   });
 
   return (
@@ -37,13 +61,6 @@ function RecuperarContrasenaPage() {
       <Row className="justify-content-center">
         <Col md={6}>
           <h3 className="text-center mb-4">Recuperar Contraseña</h3>
-
-          {/* Mensaje de éxito */}
-          {enviado && (
-            <Alert variant="success" className="text-center">
-              Se ha enviado un correo con las instrucciones para recuperar tu contraseña.
-            </Alert>
-          )}
 
           {/* Formulario */}
           <Form noValidate onSubmit={formik.handleSubmit}>
