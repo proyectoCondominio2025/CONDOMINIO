@@ -107,6 +107,10 @@ export const RoutesComponent = createBrowserRouter([
         path: '/admin/listar-formularios',
         element: <ListarFormulario />,
       },
+      {
+        path: '/admin/perfil-admin',
+        element: <PerfilResidente />,
+      },
     ]
   },
 
@@ -172,10 +176,10 @@ export const RoutesComponent = createBrowserRouter([
         element: <ListaVisitaPage/>,
       },
 
-      // {
-      //   path: '/portero/perfil',
-      //   element: <MiPerfil />,
-      // },
+       {
+        path: '/portero/perfil-portero',
+        element: <PerfilResidente />,
+      },
     ]
   },
 

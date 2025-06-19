@@ -52,14 +52,14 @@ const AdminNavbar = () => {
               <Nav.Link as={Link} to="/admin/listar-usuarios" className='mx-3'>Crear/listar Usuario</Nav.Link>
               <Nav.Link as={Link} to="/admin/listar-noticias" className='mx-3'>Crear/listar Noticias</Nav.Link>
               <Nav.Link as={Link} to="/admin/listar-pagos" className='mx-3'>Pagos</Nav.Link>
-
+              <Nav.Link as={Link} to="/admin/listar-formularios" className='mx-3'>Contactos</Nav.Link>
             </Nav>
             <Nav className="ms-auto">
 
               <DropdownButton variant='outline-light' id="dropdown-basic-button" drop={'start'} title={<i class="bi bi-gear text-dark fs-5"></i>}>
                 <Dropdown.ItemText >{capitalizarPrimeraLetra(nombre)}</Dropdown.ItemText>
                 <NavDropdown.Divider />
-                <Dropdown.Item href="/admin/perfil">Mi perfil</Dropdown.Item>
+                <Dropdown.Item href="/admin/perfil-admin">Mi perfil</Dropdown.Item>
                 <Dropdown.Item onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>
               </DropdownButton>
 
