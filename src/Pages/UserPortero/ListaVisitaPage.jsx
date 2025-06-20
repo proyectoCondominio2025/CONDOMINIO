@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/axios';
+import Select from 'react-select'; 
 
 function ListaVisita() {
     const [visitas, setVisitas] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date().toISOString().split('T')[0]);
+    const [filtroRut, setFiltroRut] = useState(null);
+    const [filtroPatente, setFiltroPatente] = useState(null);
+
 
     const navigate = useNavigate();
 
@@ -46,11 +51,99 @@ function ListaVisita() {
         return <p className="text-center text-red-600 mt-6">{error}</p>;
     }
 
+
+    const formatearFechaLocalYMD = (fechaStr) => {
+        const f = new Date(fechaStr);
+        const year = f.getFullYear();
+        const month = String(f.getMonth() + 1).padStart(2, '0');
+        const day = String(f.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+
+    const esMismaFecha = (fechaStr) => {
+        return formatearFechaLocalYMD(fechaStr) === fechaSeleccionada;
+    };
+
+    const opcionesRut = [
+        ...new Map(visitas.map(v => [v.rut, {
+            value: v.rut,
+            label: `${v.nombre} ${v.apellido} - ${v.rut}`
+        }])).values()
+    ];
+
+    const opcionesPatente = [
+        ...new Map(visitas.flatMap(v =>
+            (v.vehiculos || []).map(auto => [auto.placa, {
+                value: auto.placa,
+                label: auto.placa
+            }])
+        )).values()
+    ];
+
+
+
+    const visitasFiltradas = visitas.filter((v) => {
+        const coincideFecha = fechaSeleccionada
+            ? formatearFechaLocalYMD(v.fecha_hora) === fechaSeleccionada
+            : true;
+
+        const coincideRut = filtroRut ? v.residente.rut === filtroRut : true;
+
+        const coincidePatente = filtroPatente
+            ? v.vehiculos?.some((veh) => veh.placa === filtroPatente)
+            : true;
+
+        return coincideFecha && coincideRut && coincidePatente;
+    });
+
+
+
     return (
         <div className="w-full mt-10 px-4">
             <div className="flex items-center justify-center mb-4">
                 <h2 className="text-2xl font-bold">Lista de Visitas</h2>
             </div>
+
+            <div className="mb-3">
+                <label>Filtrar por fecha:</label>
+                <input
+                    type="date"
+                    className="form-control"
+                    value={fechaSeleccionada}
+                    onChange={(e) => setFechaSeleccionada(e.target.value)}
+                />
+            </div>
+            <div className="mb-3">
+                <label>Filtrar por RUT del residente:</label>
+                <Select
+                    options={opcionesRut}
+                    isClearable
+                    placeholder="Seleccionar RUT..."
+                    onChange={(selected) => setFiltroRut(selected ? selected.value : null)}
+                />
+            </div>
+
+            <div className="mb-3">
+                <label>Filtrar por patente del vehículo:</label>
+                <Select
+                    options={opcionesPatente}
+                    isClearable
+                    placeholder="Seleccionar patente..."
+                    onChange={(selected) => setFiltroPatente(selected ? selected.value : null)}
+                />
+            </div>
+
+            <button
+                className="btn btn-outline-secondary mb-3"
+                onClick={() => {
+                    setFechaSeleccionada('');
+                    setFiltroRut(null);
+                    setFiltroPatente(null);
+                }}
+            >
+                Limpiar filtros
+            </button>
 
             <button
                 onClick={() => navigate('/portero/ingreso-visita')}
@@ -71,13 +164,13 @@ function ListaVisita() {
                             <th className="py-3 px-4 text-left">Teléfono Residente</th>
                             <th className="py-3 px-4 text-left">¿Vehículo?</th>
                             <th className="py-3 px-4 text-left">Patente</th>
-                            <th className="py-3 px-4 text-left">Estado</th>
-                            <th className="py-3 px-4 text-center">Acciones</th>
+                            <th className="py-3 px-4 text-left">Estacionado</th>
+                            {/* <th className="py-3 px-4 text-center">Acciones</th> */}
                         </tr>
                     </thead>
                     <tbody>
                         {visitas.length ? (
-                            visitas.map((v) => {
+                            visitasFiltradas.map((v) => {
                                 const tieneAuto = v.vehiculos && v.vehiculos.length > 0;
                                 const vehiculo = tieneAuto ? v.vehiculos[0] : null;
                                 return (
@@ -112,7 +205,7 @@ function ListaVisita() {
                                                 '—'
                                             )}
                                         </td>
-                                        <td className="py-3 px-4 flex justify-center gap-2">
+                                        {/* <td className="py-3 px-4 flex justify-center gap-2">
                                             <button
                                                 onClick={() => editarVisita(v)}
                                                 className="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-xs shadow"
@@ -125,7 +218,7 @@ function ListaVisita() {
                                             >
                                                 Eliminar
                                             </button>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 );
                             })

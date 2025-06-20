@@ -1,74 +1,10 @@
-// // import React, { useState } from 'react';
-// // import { Table, Button, Container } from 'react-bootstrap';
-// // import { autos } from '../../data/data';
-
-
-// // function ListaAutos() {
-
-
-
-// //   const eliminarAuto = (id) => {
-// //     const nuevosAutos = autos.filter(auto => auto.id !== id);
-// //     setAutos(nuevosAutos);
-// //   };
-// //   const editarVehiculo = (auto) => {
-// //     console.log('Editar vehiculo:', auto);
-// //     // Aquí puedes redirigir a otra página con react-router o abrir un modal
-// //   };
-
- 
-// //   return (
-// //     <Container className="mt-5">
-// //       <h2>Lista de Autos</h2>
-
-// //       <Table striped bordered hover>
-// //         <thead>
-// //           <tr>
-// //             <th>ID</th>
-// //             <th>Patente</th>
-// //             <th>Dueño</th>
-// //             <th>N° Casa</th>
-// //             <th>Estado</th>
-// //             <th>Acciones</th>
-// //           </tr>
-// //         </thead>
-// //         <tbody>
-// //           {autos.map(auto => (
-// //             <tr key={auto.id}>
-// //               <td>{auto.id}</td>
-// //               <td>{auto.patente}</td>
-// //               <td>{auto.duenio}</td>
-// //               <td>{auto.casa}</td>
-// //               <td>{auto.estado}</td>
-// //               <td>
-// //                 <Button
-// //                   variant="success"
-// //                   className="me-2"
-// //                   onClick={() => editarVehiculo(auto)}>
-// //                   Editar
-// //                 </Button>
-
-// //                 <Button variant="danger" onClick={() => alert('se elimino el auto con patente: ' + auto.patente)}>
-// //                   Eliminar
-// //                 </Button>
-// //               </td>
-// //             </tr>
-// //           ))}
-// //         </tbody>
-// //       </Table>
-// //     </Container>
-// //   );
-// // }
-
-// // export default ListaAutos;
-
-
-
 import React, { useEffect, useState } from 'react';
 import { FaCar, FaEdit, FaTrash } from 'react-icons/fa';
-// import api from('../../api/axios'); // Asegúrate de tener configured tu API
+import api from '../../api/axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Select from 'react-select';  // ❌ Está dentro del componente
+
 
 function ListaVehiculos() {
   const [vehiculos, setVehiculos] = useState([]);
@@ -76,10 +12,19 @@ function ListaVehiculos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
+  const [filtroPatente, setFiltroPatente] = useState(null);
+  const [filtroEstado, setFiltroEstado] = useState("Todos");
+
+
+
+
+
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
-        const response = await api.get('vehiculos/');
+        const response = await api.get('/vehiculos-visita/');
+        console.log("Vehículos recibidos:", response.data); // 👈 revisa esto en consola
         setVehiculos(response.data);
       } catch (err) {
         setError("No se pudieron cargar los vehículos.");
@@ -90,8 +35,87 @@ function ListaVehiculos() {
     fetchVehiculos();
   }, []);
 
+  async function toggleEstado(vehiculo) {
+    try {
+      const nuevoEstado = vehiculo.estado;
+
+      await api.patch(`/vehiculos-visita/${vehiculo.id}/`, {
+        estado: nuevoEstado
+      });
+
+      setVehiculos((prevVehiculos) =>
+        prevVehiculos.map((v) =>
+          v.id === vehiculo.id ? { ...v, estado: nuevoEstado } : v
+        )
+      );
+
+      Swal.fire("Actualizado", `El estado fue cambiado correctamente`, "success");
+    } catch (err) {
+      console.error("Error PATCH:", err.response?.data || err.message);
+      Swal.fire("Error", err.response?.data?.detail || "No se pudo cambiar el estado del vehículo.", "error");
+    }
+  }
+
+  useEffect(() => {
+    const verificarVehiculosEstacionados = () => {
+      const ahora = new Date();
+
+      const alertas = vehiculos.filter((v) => {
+        if (!v.estado) return false; // 🚨 Solo alerta si está Activo
+        const fechaIngreso = new Date(v.fecha_visita);
+        const diferenciaHoras = (ahora - fechaIngreso) / (1000 * 60 * 60);
+        return diferenciaHoras >= 3;
+      });
+
+
+      alertas.forEach((vehiculo) => {
+        Swal.fire({
+          icon: "warning",
+          title: "¡Atención!",
+          html: `
+          El vehículo con placa <b>${vehiculo.placa}</b> lleva más de 3 horas en el estacionamiento.<br>
+          Teléfono del residente: <b>${vehiculo.registro_visita?.residente?.telefono || 'Desconocido'}</b>
+        `,
+          confirmButtonText: "OK"
+        });
+      });
+    };
+
+    if (vehiculos.length > 0) {
+      verificarVehiculosEstacionados();
+    }
+  }, [vehiculos]);
+
+
+
+
+
+  const opcionesPatente = [
+    ...new Map(vehiculos.map(v => [v.placa, {
+      value: v.placa,
+      label: v.placa
+    }])).values()
+  ];
+
+
+  const vehiculosFiltrados = vehiculos.filter(v => {
+    const coincidePatente = filtroPatente ? v.placa === filtroPatente : true;
+
+    const coincideEstado =
+      filtroEstado === "Todos" ? true :
+        filtroEstado === "Activo" ? v.estado === true :
+          v.estado === false;
+
+    return coincidePatente && coincideEstado;
+  });
+
+
+
+
+
+
   async function eliminarVehiculo(vehiculo) {
-    Swal.fire({ 
+    Swal.fire({
       title: `¿Deseas eliminar el vehículo ${vehiculo.patente}?`,
       text: "Esta acción no se puede deshacer.",
       icon: 'warning',
@@ -105,7 +129,7 @@ function ListaVehiculos() {
         try {
           await api.delete(`vehiculos/${vehiculo.id}/`);
           Swal.fire('Eliminado!', `El vehículo ${vehiculo.patente} ha sido eliminado.`, 'success');
-          setVehiculos(vehiculos.filter(v => v.id !== vehiculo.id)); 
+          setVehiculos(vehiculos.filter(v => v.id !== vehiculo.id));
         } catch (err) {
           Swal.fire('Error', 'No se pudo eliminar el vehículo.', 'error');
         }
@@ -128,7 +152,46 @@ function ListaVehiculos() {
         <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-8">
           Lista de Vehículos
         </h2>
-        <div className="mb-6 flex">
+
+        <div className="flex flex-col sm:flex-row gap-4 mb-4">
+          <div className="w-full sm:w-1/2">
+            <label className="block mb-1 text-sm font-semibold">Filtrar por patente:</label>
+            <Select
+              options={opcionesPatente}
+              isClearable
+              placeholder="Selecciona una patente..."
+              onChange={(selected) => setFiltroPatente(selected ? selected.value : null)}
+            />
+          </div>
+
+          <div className="w-full sm:w-1/2">
+            <label className="block mb-1 text-sm font-semibold">Filtrar por estado:</label>
+            <select
+              value={filtroEstado}
+              onChange={(e) => setFiltroEstado(e.target.value)}
+              className="w-full px-3 py-2 border rounded shadow-sm"
+            >
+              <option value="Todos">Todos</option>
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+          </div>
+        </div>
+
+
+        {/* <button
+          className="btn btn-outline-secondary mb-3"
+          onClick={() => {
+            setFechaSeleccionada('');
+            setFiltroRut(null);
+            setFiltroPatente(null);
+          }}
+        >
+          Limpiar filtros
+        </button>
+      </div> */}
+
+        {/* <div className="mb-6 flex">
           <Link to="/admin/crear-vehiculo">
             <button
               className="group
@@ -145,61 +208,72 @@ function ListaVehiculos() {
               Crear Vehículo
             </button>
           </Link>
-        </div>
+        </div> */}
 
-        {/* Tabla */} 
+        {/* Tabla */}
         <div className="bg-white rounded-2xl shadow-lg overflow-x-auto">
           <table className="min-w-full text-base">
             <thead>
               <tr className="bg-indigo-100 text-black">
-                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">ID</th>
+                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Fecha/Hora</th>
                 <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Patente</th>
-                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Dueño</th>
-                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">N° Casa</th>
-                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Estado</th>
-                <th className="px-4 py-3 text-center text-xs font-extrabold font-[Inter] uppercase tracking-wider">Acciones</th>
+                <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] uppercase tracking-wider">Estacionado</th>
+                {/* <th className="px-4 py-3 text-center text-xs font-extrabold font-[Inter] uppercase tracking-wider">Acciones</th> */}
               </tr>
             </thead>
             <tbody>
-              {vehiculos.length > 0 ? (
-                vehiculos.map(vehiculo => (
-                   <tr key={vehiculo.id} className="border-b last:border-b-0 hover:bg-indigo-50 transition">
-                      <td className="px-4 py-3">{vehiculo.id}</td>
-                      <td className="px-4 py-3 font-semibold">{vehiculo.patente}</td>
-                      <td className="px-4 py-3">{vehiculo.duenio}</td>
-                      <td className="px-4 py-3">{vehiculo.casa ?? "N/A"}</td>
-                      <td className="px-4 py-3">{vehiculo.estado}</td>
-                      <td className="px-4 py-3">
-                        <div className="flex gap-2 justify-center">
-                          <button
-                            onClick={() => console.log('Editar', vehiculo)}
-                            className="flex items-center gap-1 px-3 py-1 bg-emerald-500 text-white rounded-lg shadow hover:bg-emerald-600 transition">
-                            <FaEdit />
-                            Editar
-                          </button>
-                          <button
-                            onClick={() => eliminarVehiculo(vehiculo)}
-                            className="flex items-center gap-1 px-3 py-1 bg-rose-500 text-white rounded-lg shadow hover:bg-rose-600 transition">
-                            <FaTrash />
-                            Eliminar
-                          </button>
-                        </div>
-                      </td>
-                   </tr>
-                 )) 
-               ) : (
-                 <tr>
-                   <td colSpan="6" className="px-4 py-8 text-center text-gray-400 text-lg">
-                     No hay vehículos registrados.
-                   </td>
-                 </tr>
-               )}
+              {vehiculosFiltrados.length > 0 ? (
+                vehiculosFiltrados.map((vehiculo, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-3">
+                      {new Date(vehiculo.fecha_visita).toLocaleString("es-CL", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true
+                      })}
+                    </td>
 
+                    <td className="px-4 py-3">{vehiculo.placa}</td>
+                    <td>
+                      <select
+                        value={vehiculo.estado ? "Activo" : "Inactivo"}
+                        onChange={(e) =>
+                          toggleEstado({
+                            ...vehiculo,
+                            estado: e.target.value === "Activo"
+                          })
+                        }
+                        className="px-3 py-1 rounded border border-gray-300 shadow-sm text-sm"
+                      >
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                      </select>
+                    </td>
+
+                    
+
+                    {/* <td className="px-4 py-3 text-center">
+                      <button onClick={() => eliminarVehiculo(vehiculo)}>Eliminar</button>
+                    </td> */}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="px-4 py-8 text-center text-gray-400 text-lg">
+                    No hay vehículos registrados.
+                  </td>
+                </tr>
+              )}
             </tbody>
+
+
           </table>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
