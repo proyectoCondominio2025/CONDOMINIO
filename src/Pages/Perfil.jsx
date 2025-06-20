@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
 import { FaUserEdit } from 'react-icons/fa';
 import { jwtDecode } from 'jwt-decode';
-import EditarPerfilModal from '../components/EditarPerfilModalResidente'; // Asegúrate de que el nombre y ruta sean correctos
+import EditarPerfilModal from './components/EditarPerfilModalResidente'; // Asegúrate de que el nombre y ruta sean correctos
 
-function PerfilResidente() {
+function Perfil() {
   const [usuario, setUsuario] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({
@@ -111,12 +111,12 @@ function PerfilResidente() {
               <div className="mb-2">{usuario.correo}</div>
             </Col>
             <Col xs={12} md={6}>
-              <strong>Número de Casa:</strong>
-              <div className="mb-2">{usuario.numero_casa}</div>
+              <strong>Número de telefono:</strong>
+              <div className="mb-2">{usuario.telefono}</div>
             </Col>
           </Row>
           <div className="text-center mt-3">
-            <Button
+            {/* <Button
               variant="primary"
               size="lg"
               className="d-flex align-items-center gap-2 mx-auto px-4 py-2 shadow-sm"
@@ -124,7 +124,7 @@ function PerfilResidente() {
             >
               <FaUserEdit size={20} className="me-2" />
               Editar Perfil
-            </Button>
+            </Button> */}
           </div>
         </Card>
       </Container>
@@ -132,4 +132,4 @@ function PerfilResidente() {
   );
 }
 
-export default PerfilResidente;
+export default Perfil;

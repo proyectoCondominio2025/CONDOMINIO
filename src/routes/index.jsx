@@ -26,7 +26,7 @@ import PagoPendientePage from '../Pages/pago/PagoPendiente';
 import LayoutAdmin from '../Pages/layout/LayoutAdmin';
 import LayoutResidente from '../Pages/layout/LayoutResidente';
 import HomeResidente from '../Pages/UserResidente/HomeResidente';
-import PerfilResidente from '../Pages/UserResidente/PerfilResidente';
+import Perfil from '../Pages/Perfil';
 import ProtectedRoute from '../Pages/components/PrivateRoute';
 import LayoutPortero from '../Pages/layout/LayoutPortero';
 import IngresoVisitaPage from '../Pages/UserPortero/IngresoVisitaPage';
@@ -109,7 +109,7 @@ export const RoutesComponent = createBrowserRouter([
       },
       {
         path: '/admin/perfil-admin',
-        element: <PerfilResidente />,
+        element: <Perfil />,
       },
     ]
   },
@@ -131,7 +131,7 @@ export const RoutesComponent = createBrowserRouter([
       },
       {
         path: '/residente/perfil-residente',
-        element: <PerfilResidente />,
+        element: <Perfil />,
       },
     ]
 
@@ -178,7 +178,7 @@ export const RoutesComponent = createBrowserRouter([
 
        {
         path: '/portero/perfil-portero',
-        element: <PerfilResidente />,
+        element: <Perfil />,
       },
     ]
   },

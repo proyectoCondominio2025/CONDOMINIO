@@ -56,7 +56,7 @@ const MenuNavbar = () => {
               <DropdownButton variant='outline-light' id="dropdown-basic-button" drop={'start'} title={<i className="bi bi-gear text-dark fs-5"></i>}>
                 <Dropdown.ItemText >{capitalizarPrimeraLetra(nombre)}</Dropdown.ItemText>
                 <NavDropdown.Divider />
-                <Dropdown.Item href="/residente/perfil-residente">Mi perfil</Dropdown.Item>
+                <Dropdown.Item href="/portero/perfil-portero">Mi perfil</Dropdown.Item>
                 <Dropdown.Item onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>
               </DropdownButton>
             </Nav>

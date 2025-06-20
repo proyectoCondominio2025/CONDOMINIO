@@ -83,20 +83,21 @@ const FormulariosPage = () => {
             ) : formularios.length === 0 ? (
                 <p>No hay formularios enviados aún.</p>
             ) : (
-                <table className="table table-bordered table-hover">
-                    <thead className="table-dark">
+                <div className="overflow-x-auto bg-white rounded-2xl shadow-lg">
+                <table className="min-w-full text-sm text-left text-gray-700">
+                    <thead className="text-xs text-gray-700 uppercase bg-blue-100">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Mensaje</th>
-                            <th>Fecha</th>
-                            <th>Accion</th>
+                            <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Nombre</th>
+                            <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Correo</th>
+                            <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Mensaje</th>
+                            <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Fecha</th>
+                            <th className="px-4 py-3 text-left text-xs font-extrabold font-[Inter] text-black uppercase tracking-wider">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
                         {formulariosFiltrados.map((form) => (
-                            <tr key={form.id}>
-                                <td>{form.nombre}</td>
+                            <tr key={form.id} className="bg-white border-b hover:bg-gray-100 transition">
+                                <td className="px-6 py-4 font-medium">{form.nombre}</td>
                                 <td>{form.correo_electronico}</td>
                                 <td>{form.mensaje}</td>
                                 <td>{new Date(form.fecha_envio).toLocaleString()}</td>
@@ -111,6 +112,7 @@ const FormulariosPage = () => {
                         ))}
                     </tbody>
                 </table>
+                </div>
             )}
             {/* Modal */}
 
