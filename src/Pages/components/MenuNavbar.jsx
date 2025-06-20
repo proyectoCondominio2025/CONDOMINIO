@@ -43,8 +43,8 @@ const MenuNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="custom-navbar">
-        <Container>
+      <Navbar expand="lg" className="custom-navbar mx-5">
+
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src={IngresoSmart}
@@ -94,7 +94,6 @@ const MenuNavbar = () => {
               )}
             </Nav>
           </Navbar.Collapse>
-        </Container>
       </Navbar>
 
       <main className="p-4">

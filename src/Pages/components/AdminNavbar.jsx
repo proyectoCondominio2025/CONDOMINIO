@@ -36,7 +36,7 @@ const AdminNavbar = () => {
     <>
       <Navbar expand="lg" className="custom-navbar">
         <Container>
-          <Navbar.Brand as={Link} to="/admin" className="d-flex align-items-center">
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
               src={IngresoSmart}
               alt="Logo"
