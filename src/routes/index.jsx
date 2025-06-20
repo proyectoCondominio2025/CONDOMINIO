@@ -107,6 +107,10 @@ export const RoutesComponent = createBrowserRouter([
         path: '/admin/listar-formularios',
         element: <ListarFormulario />,
       },
+      {
+        path: '/admin/perfil-residente',
+        element: <PerfilResidente />,
+      },
     ]
   },
 

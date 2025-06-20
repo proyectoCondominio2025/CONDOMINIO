@@ -88,13 +88,13 @@ function PagosUsuarios() {
                                         <td className="px-4 py-3">
                                             <span
                                                 className={
-                                                    pago.estado === "pagado"
+                                                    pago.estado === "aprobado"
                                                         ? "inline-block px-4 py-1 text-sm rounded-full bg-emerald-100 text-emerald-700 font-bold shadow-md border border-emerald-200 ring-1 ring-emerald-100/50 transition-all duration-150"
                                                         : "inline-block px-4 py-1 text-sm rounded-full bg-rose-100 text-rose-700 font-bold shadow-md border border-rose-200 ring-1 ring-rose-100/50 transition-all duration-150"
                                                 }
                                                 style={{ letterSpacing: "0.05em" }}
                                             >
-                                                {pago.estado}
+                                                {pago.estado === "aprobado" ? 'Pagado' : capitalizeFirstLetter(pago.estado)}
                                             </span>
                                         </td>
                                     </tr>

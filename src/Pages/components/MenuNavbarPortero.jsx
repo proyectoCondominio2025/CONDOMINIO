@@ -47,10 +47,8 @@ const MenuNavbar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/portero/lista-visita" className="text-black" activeClassName="active">Lista Visita</Nav.Link>
+              <Nav.Link as={Link} to="/portero/lista-visita" className="text-black" activeClassName="active">Visitas</Nav.Link>
               <Nav.Link as={Link} to="/portero/lista-vehiculo" className="text-black" activeClassName="active">Lista Vehiculos</Nav.Link>
-              <Nav.Link as={Link} to="/portero/ingreso-visita" className="text-black" activeClassName="active">Ingreso Visita</Nav.Link>
-
             </Nav>
             <Nav className="ms-auto">
               <DropdownButton variant='outline-light' id="dropdown-basic-button" drop={'start'} title={<i className="bi bi-gear text-dark fs-5"></i>}>
