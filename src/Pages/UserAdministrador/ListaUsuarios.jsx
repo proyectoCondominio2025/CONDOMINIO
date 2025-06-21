@@ -71,6 +71,7 @@ function ListaUsuarios() {
           timerProgressBar: true,
           showConfirmButton: false
         });
+        setShowModal(false);
         // Actualizar estado y cerrar modal
         setUsuarios(prev => prev.map(u =>
           u.id === usuarioSeleccionado.id ? { ...u, ...response.data } : u
@@ -86,6 +87,7 @@ function ListaUsuarios() {
 
         const response = await api.patch(`residentes/${usuarioSeleccionado.id}/editar/`, data);
 
+        
 
         Swal.fire({
           title: '¡Guardado exitoso!',
@@ -95,6 +97,8 @@ function ListaUsuarios() {
           timerProgressBar: true,
           showConfirmButton: false
         });
+
+        setShowModal(false);
 
         setUsuarios(prev => prev.map(u =>
           u.id === usuarioSeleccionado.id ? { ...u, ...response.data } : u
