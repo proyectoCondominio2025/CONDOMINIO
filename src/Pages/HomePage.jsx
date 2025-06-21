@@ -38,14 +38,13 @@ function HomePage() {
   return (
     <div className="min-h-screen  px-4 py-8">
       <section
-        className="relative bg-cover bg-center h-96 flex items-center justify-center text-center text-white"
+        className="relative bg-cover bg-center h-98 flex items-center justify-center text-center text-white mb-5"
         style={{
-
-          backgroundImage: "url('imagen/imagenHome.jpg')",
+          backgroundImage: "url('imagen/condominio.jpg')",
         }}
       >
         <div className="bg-black bg-opacity-50 p-8 rounded-xl max-w-2xl">
-          <h1 className="text-4xl font-bold mb-4">Sobre el Condominio</h1>
+          <h1 className="text-4xl font-bold mb-4">Condominio Maremi</h1>
           <p className="text-lg">
             Somos una comunidad comprometida con el bienestar de nuestros residentes. Aquí encontrarás toda la información relevante, noticias, eventos y medios de contacto.
           </p>
@@ -53,7 +52,7 @@ function HomePage() {
       </section>
 
 
-      <h1 className="text-3xl font-bold text-center text-gray-800 mt-6 mb-6">Noticias</h1>
+      <h1 className="text-3xl font-bold text-center text-gray-800 my-5">Noticias</h1>
 
       {loading && (
         <div className="flex justify-center items-center min-h-[100px]">
@@ -64,7 +63,7 @@ function HomePage() {
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       {!loading && !error && (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-5">
           {noticias.length > 0 ? (
             noticias.map((noticia) => (
               <div

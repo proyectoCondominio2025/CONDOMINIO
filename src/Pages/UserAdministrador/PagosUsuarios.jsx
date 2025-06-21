@@ -58,7 +58,7 @@ function PagosUsuarios() {
         <>
             <div className="min-h-screen w-full bg-[#a6ecec] py-10 px-2">
                 <div className="w-full max-w-[1400px] mx-auto px-4">
-                    <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-8">
+                    <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-5">
                         Pagos de {capitalizeFirstLetter(pagos.nombre)} {capitalizeFirstLetter(pagos.apellido)}
                     </h2>
                     <div className="bg-white rounded-2xl shadow-lg overflow-x-auto">

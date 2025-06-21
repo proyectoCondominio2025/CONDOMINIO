@@ -149,12 +149,12 @@ function ListaUsuarios() {
         onGuardar={guardarEdicionUsuario}
       />
       {/* Fondo celeste igual que Lista de Noticias */}
-      <div className="min-h-screen w-full" style={{ background: "#a6ecec" }}>
+      <div className="min-h-screen w-full bg-[#a6ecec] py-10 px-2">
         <div className="w-full max-w-[1400px] mx-auto px-4">
-          <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-8">
+          <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-5">
             Lista de Usuarios
           </h2>
-          <div className="mb-6 flex">
+          <div className="mb-5 flex">
             <Link to="/admin/crear-usuarios">
               <button
                 className=" group

@@ -12,12 +12,8 @@ function ListaVehiculos() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   const [filtroPatente, setFiltroPatente] = useState(null);
   const [filtroEstado, setFiltroEstado] = useState("Todos");
-
-
-
 
 
   useEffect(() => {
@@ -26,6 +22,7 @@ function ListaVehiculos() {
         const response = await api.get('/vehiculos-visita/');
         console.log("Vehículos recibidos:", response.data); // 👈 revisa esto en consola
         setVehiculos(response.data);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setError("No se pudieron cargar los vehículos.");
       } finally {
@@ -67,14 +64,13 @@ function ListaVehiculos() {
         return diferenciaHoras >= 3;
       });
 
-
       alertas.forEach((vehiculo) => {
         Swal.fire({
           icon: "warning",
           title: "¡Atención!",
           html: `
           El vehículo con placa <b>${vehiculo.placa}</b> lleva más de 3 horas en el estacionamiento.<br>
-          Teléfono del residente: <b>${vehiculo.registro_visita?.residente?.telefono || 'Desconocido'}</b>
+          Teléfono del residente: <b>${vehiculo.residente?.telefono || 'Desconocido'}</b>
         `,
           confirmButtonText: "OK"
         });
@@ -85,9 +81,6 @@ function ListaVehiculos() {
       verificarVehiculosEstacionados();
     }
   }, [vehiculos]);
-
-
-
 
 
   const opcionesPatente = [
@@ -114,28 +107,28 @@ function ListaVehiculos() {
 
 
 
-  async function eliminarVehiculo(vehiculo) {
-    Swal.fire({
-      title: `¿Deseas eliminar el vehículo ${vehiculo.patente}?`,
-      text: "Esta acción no se puede deshacer.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await api.delete(`vehiculos/${vehiculo.id}/`);
-          Swal.fire('Eliminado!', `El vehículo ${vehiculo.patente} ha sido eliminado.`, 'success');
-          setVehiculos(vehiculos.filter(v => v.id !== vehiculo.id));
-        } catch (err) {
-          Swal.fire('Error', 'No se pudo eliminar el vehículo.', 'error');
-        }
-      }
-    });
-  }
+  // async function eliminarVehiculo(vehiculo) {
+  //   Swal.fire({
+  //     title: `¿Deseas eliminar el vehículo ${vehiculo.patente}?`,
+  //     text: "Esta acción no se puede deshacer.",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#d33',
+  //     cancelButtonColor: '#3085d6',
+  //     confirmButtonText: 'Sí, eliminar',
+  //     cancelButtonText: 'Cancelar'
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       try {
+  //         await api.delete(`vehiculos/${vehiculo.id}/`);
+  //         Swal.fire('Eliminado!', `El vehículo ${vehiculo.patente} ha sido eliminado.`, 'success');
+  //         setVehiculos(vehiculos.filter(v => v.id !== vehiculo.id));
+  //       } catch (err) {
+  //         Swal.fire('Error', 'No se pudo eliminar el vehículo.', 'error');
+  //       }
+  //     }
+  //   });
+  // }
 
   if (loading) {
     return (
@@ -164,12 +157,13 @@ function ListaVehiculos() {
             />
           </div>
 
-          <div className="w-full sm:w-1/2">
+          <div className="w-full sm:w-1/2 ">
             <label className="block mb-1 text-sm font-semibold">Filtrar por estado:</label>
             <select
               value={filtroEstado}
               onChange={(e) => setFiltroEstado(e.target.value)}
               className="w-full px-3 py-2 border rounded shadow-sm"
+              style={{ background: "#FFFFFF" }}
             >
               <option value="Todos">Todos</option>
               <option value="Activo">Activo</option>

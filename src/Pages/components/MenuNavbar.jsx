@@ -96,7 +96,7 @@ const MenuNavbar = () => {
           </Navbar.Collapse>
       </Navbar>
 
-      <main className="p-4">
+      <main className="p-3">
         <Outlet />
       </main>
 

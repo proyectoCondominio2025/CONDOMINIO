@@ -62,13 +62,27 @@ function ListarPagos() {
   return (
     <>
       <div className="min-h-screen w-full bg-[#a6ecec] py-10 px-2">
-        <Button variant="success" className="ms-4" onClick={generarPagos}>
-          Generar pagos del mes
-        </Button>
-        <div className="w-full max-w-[1400px] mx-auto px-4">
-          <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-8">
+        <div className="w-full max-w-[1400px] mx-auto px-4" style={{ background: "#a6ecec" }}>
+          <h2 className="text-4xl font-extrabold text-center text-gray-800 drop-shadow mb-5">
             Lista de usuarios - Pagos
           </h2>
+
+          <button className="
+            group
+            flex items-center gap-2 
+            px-6 py-2
+            bg-gradient-to-r from-indigo-600 via-violet-600 to-blue-600
+            text-white text-lg font-bold uppercase tracking-wide
+            rounded-full shadow-lg 
+            hover:scale-105 hover:shadow-xl hover:from-indigo-700 hover:to-blue-700 
+            transition-all duration-200
+            focus:outline-none focus:ring-2 focus:ring-indigo-400
+            active:scale-95 mb-5
+          "
+            onClick={generarPagos}>
+            Generar pagos del mes
+          </button>
+
           <div className="bg-white rounded-2xl shadow-lg overflow-x-auto">
             <table className="w-full text-base">
               <thead>
