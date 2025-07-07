@@ -5,14 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 
 function Perfil() {
   const [usuario, setUsuario] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({
-    nombre: '',
-    apellido: '',
-    correo: '',
-    telefono: '',
-    numero_casa: ''
-  });
+
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -27,7 +20,7 @@ function Perfil() {
           numero_casa: decoded.numero_casa || '-',
         };
         setUsuario(datosUsuario);
-        setForm(datosUsuario); // ← También inicializa el formulario
+
       } catch (error) {
         console.error("Token inválido:", error);
         localStorage.removeItem("accessToken");
@@ -36,30 +29,8 @@ function Perfil() {
     }
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
 
-  const handleSave = async () => {
-    const token = localStorage.getItem("accessToken");
-    try {
-      await fetch('/api/mi-perfil/editar/', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(form),
-      });
-      alert('Perfil actualizado correctamente');
-      setUsuario(form);
-      setShowModal(false);
-    } catch (error) {
-      alert('Error al guardar el perfil');
-      console.error(error);
-    }
-  };
+ 
 
   if (!usuario) {
     return (
@@ -73,13 +44,6 @@ function Perfil() {
 
   return (
     <>
-      <EditarPerfilModal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        form={form}
-        handleChange={handleChange}
-        handleSave={handleSave}
-      />
 
       <Container className="mt-5 d-flex justify-content-center align-items-center" style={{ minHeight: '70vh' }}>
         <Card className="shadow-lg rounded-4 p-4 w-100" style={{ maxWidth: 500, background: 'rgba(255,255,255,0.96)' }}>

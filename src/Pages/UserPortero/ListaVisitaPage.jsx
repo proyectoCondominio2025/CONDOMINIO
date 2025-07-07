@@ -10,7 +10,14 @@ function ListaVisita() {
     const [visitas, setVisitas] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date().toISOString().split('T')[0]);
+    const [fechaSeleccionada, setFechaSeleccionada] = useState(() => {
+        const ahora = new Date();
+        const fechaChile = new Date(ahora.toLocaleString("en-US", {timeZone: "America/Santiago"}));
+        const year = fechaChile.getFullYear();
+        const month = String(fechaChile.getMonth() + 1).padStart(2, '0');
+        const day = String(fechaChile.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    });
     const [filtroRut, setFiltroRut] = useState(null);
     const [filtroPatente, setFiltroPatente] = useState(null);
 
@@ -42,9 +49,11 @@ function ListaVisita() {
 
     const formatearFechaLocalYMD = (fechaStr) => {
         const f = new Date(fechaStr);
-        const year = f.getFullYear();
-        const month = String(f.getMonth() + 1).padStart(2, '0');
-        const day = String(f.getDate()).padStart(2, '0');
+        // Convertir a zona horaria de Chile (UTC-3)
+        const fechaChile = new Date(f.toLocaleString("en-US", {timeZone: "America/Santiago"}));
+        const year = fechaChile.getFullYear();
+        const month = String(fechaChile.getMonth() + 1).padStart(2, '0');
+        const day = String(fechaChile.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
 
