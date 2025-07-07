@@ -44,7 +44,6 @@ function LoginPage() {
         const decoded = jwtDecode(response.data.access);
         const tipoUsuario = decoded.tipo_de_usuario;
 
-        console.log("tipode usuario", tipoUsuario)
         setLoading(false);
 
         Swal.fire({
@@ -65,7 +64,6 @@ function LoginPage() {
           }
         });
 
-      // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setLoading(false);
         Swal.fire({
@@ -83,7 +81,7 @@ function LoginPage() {
         <Col md={6}>
           <Card className="p-4 shadow rounded-4">
             <h3 className="text-center mb-4">Iniciar Sesión</h3>
-            <Form noValidate onSubmit={formik.handleSubmit}>
+            <Form noValidate onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
               <Form.Group controlId="formEmail">
                 <Form.Label>Correo Electrónico</Form.Label>
                 <Form.Control

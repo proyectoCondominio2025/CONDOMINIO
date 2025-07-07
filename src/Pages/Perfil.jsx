@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
-import { FaUserEdit } from 'react-icons/fa';
+
 import { jwtDecode } from 'jwt-decode';
-import EditarPerfilModal from './components/EditarPerfilModalResidente'; // Asegúrate de que el nombre y ruta sean correctos
 
 function Perfil() {
   const [usuario, setUsuario] = useState(null);
@@ -116,15 +115,7 @@ function Perfil() {
             </Col>
           </Row>
           <div className="text-center mt-3">
-            {/* <Button
-              variant="primary"
-              size="lg"
-              className="d-flex align-items-center gap-2 mx-auto px-4 py-2 shadow-sm"
-              onClick={() => setShowModal(true)}
-            >
-              <FaUserEdit size={20} className="me-2" />
-              Editar Perfil
-            </Button> */}
+
           </div>
         </Card>
       </Container>
